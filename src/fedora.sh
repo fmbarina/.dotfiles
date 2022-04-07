@@ -6,7 +6,7 @@
 # Var -------------------------------------------------------------------------
 
 extension="rpm" 
-log_dist="fedora" # Unused here, used in noarch.sh
+log_dist="fedora" # Unused here, used in nodist.sh
 
 pm_packages=(
 	python3              # Python3

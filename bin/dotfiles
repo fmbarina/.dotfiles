@@ -226,9 +226,9 @@ er_success "Repository up to date"
 
 # Source ----------------------------------------------------------------------
 
-# noarch.sh must be imported before any distro-specific files
-# shellcheck source=../src/noarch.sh
-source "$DOTFILES/src/noarch.sh"
+# Distro independent things must be imported before any distro-specific files
+# shellcheck source=../src/nodist.sh
+source "$DOTFILES/src/nodist.sh"
 
 if is_fedora; then
 	log "[dot] Sourcing fedora.sh"

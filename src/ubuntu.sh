@@ -6,7 +6,7 @@
 # Var -------------------------------------------------------------------------
 
 extension="deb" 
-log_dist="ubuntu" # Unused here, used in noarch.sh
+log_dist="ubuntu" # Unused here, used in nodist.sh
 
 pm_packages=(
 	python3              # Python3

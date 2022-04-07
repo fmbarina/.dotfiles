@@ -2,7 +2,7 @@
 
 # Var -------------------------------------------------------------------------
 
-log_dist='noarch' # replaced by distro name, this value should never be used.
+log_dist='nodist' # replaced by distro name, this value should never be used.
 
 ### pip ###
 
