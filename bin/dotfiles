@@ -1,0 +1,287 @@
+#!/usr/bin/env bash
+
+# Var -------------------------------------------------------------------------
+
+REPOURL="https://github.com/fmbarina/.dotfiles.git" 
+
+DOTFILES="$HOME/.dotfiles"
+BIN_DIR="$DOTFILES/bin"
+LINK_DIR="$DOTFILES/link"
+INIT_DIR="$DOTFILES/init"
+BKP_DIR="$DOTFILES/backup"
+
+# If $VAR undefined, define it
+[ -z "$DOWN_DIR" ] && DOWN_DIR="$HOME/Downloads/tmpdotfiles"
+[ -z "$LOG_DIR" ] && LOG_DIR="$DOTFILES"
+
+LOG_DOT_FILE="$LOG_DIR/dotfiles.log"
+LOG_SUD_FILE="$LOG_DIR/sudo.log"
+LOG_OTH_FILE="$LOG_DIR/other.log"
+
+sudop=              # sudo password
+declare -i sudor=0  # return value for sudo_do
+declare -i sudof=0  # sudo fail counter
+declare -i sudol=1  # sudo failures allowed (will exit if greater than)
+
+# TODO: Might wanna learn how to use actual custom args
+enable_log=yes # ha ha yes to be fixed later
+
+# Functions -------------------------------------------------------------------
+
+# Some functions are in the dotfiles script so they can be used
+# without the needing to first clone the entire repository.
+
+### User feedback ###
+
+# Shamelessly st- borrowed from and altered cowboy/dotfiles/bin/dotfiles 
+
+# Print formatted message - These are his, the rest is my fault
+e_header()    { echo -e  "\n\033[1m$1\033[0m"; }
+e_success()   { echo -e  " \033[1;32m✔\033[0m $1"; }
+e_error()     { echo -e  " \033[1;31m✖\033[0m $1"; }
+e_arrow()     { echo -e  " \033[1;34m➜\033[0m $1"; }
+# Reprint current line
+er_success()  { echo -e  "\033[2K\r\033[1;32m✔\033[0m $1"; }
+er_error()    { echo -e  "\033[2K\r\033[1;31m✖\033[0m $1"; }
+er_arrow()    { echo -e  "\033[2K\r\033[1;34m➜\033[0m $1"; }
+# Print without newline at the end
+en_success()  { echo -en " \033[1;32m✔\033[0m $1"; }
+en_error()    { echo -en " \033[1;31m✖\033[0m $1"; }
+en_arrow()    { echo -en " \033[1;34m➜\033[0m $1"; }
+# Reprint current line without newline at the end
+ern_success() { echo -en "\033[2K\r\033[1;32m✔\033[0m $1"; }
+ern_error()   { echo -en "\033[2K\r\033[1;31m✖\033[0m $1"; }
+ern_arrow()   { echo -en "\033[2K\r\033[1;34m➜\033[0m $1"; }
+
+e_erase_cur() { echo -en "\033[2K\r"; } # Erase current line
+
+### Logging ###
+
+log() {
+	if [ "$LOG_DIR" != "$DOTFILES" ]; then
+		make_dir "$LOG_DIR"
+	fi
+
+	if [ -d "$LOG_DIR" ]; then
+		if [ -n "$enable_log" ]; then
+			echo -e "[$(date +%H:%M:%S)] - $1" >> "$LOG_DOT_FILE"; 
+		fi
+	fi
+}
+
+make_dir() {
+	if [ -d "$1" ]; then
+		log "[make_dir] Directory $1 already exists"
+	else
+		log "[make_dir] Creating directory $1"
+		mkdir -p "$1"
+	fi
+}
+
+delete_dir() {
+	if [ -d "$1" ]; then
+		log "[delete_dir] Deleting directory $1"
+		rm -rf "$1"
+	else
+		log "[delete_dir] Directory $1 does not exist"
+	fi
+}
+
+### Distro detection ###
+
+# This is not the most robust way to do this. Works fine, since it's all I use.
+is_fedora() {
+	[ -f /etc/fedora-release ]
+}
+
+is_ubuntu() {
+	[ -f /etc/lsb-release ]
+}
+
+# function is_arch() one day...
+
+is_known_distro() {
+	is_fedora || is_ubuntu
+}
+
+### sudo ###
+
+# Request sudo password if it's not already set
+# Separate from sudo_do because user might just not wanna allow sudo, but still 
+# want to run the commands. In such case, all calls to sudo_do will be skipped.
+sudo_req() {
+	e_header "Regarding dotfiles and sudo"
+	echo "This script will install many things and, as such, it will require"
+	echo "sudo. If you don't want to or can't provide your sudo password, you"
+	echo "may skip it. But I don't even know if it works without it."
+
+	if [ -z "$sudop" ]; then
+		echo ''
+		read -s -r -p "Type sudo password, or skip by pressing enter: " sudop
+		echo ''
+		if [ -z "$sudop" ]; then
+			echo "Anything that requires sudo will be skipped."
+		else
+			echo "Password will be passed automatically in the future, don't worry."
+		fi  
+	fi
+
+	sudo_do "touch /etc"
+}
+
+# This certainly isn't the best (or safest!) way to do this. Works for my case.
+# Execute sudo command without needing to ask password
+sudo_do() {
+	if [ -z "$sudop" ]; then
+		log "[sudo] No sudo password set, skipping: $1"
+		sudor=2
+	else
+		log "[sudo] Executing: $1"
+		
+		if [ -d $LOG_DIR ]; then
+			echo "$sudop" | sudo -S >> $LOG_SUD_FILE 2>>$LOG_SUD_FILE $1 && sudor=0 && return
+		else
+			echo "$sudop" | sudo -S 1> /dev/null $1 && sudor=0 && return
+		fi
+
+		sudof+=1
+		sudor=1
+	fi
+
+	if (( sudof > sudol )); then
+		log "[sudo] There has been a sudo error. ($sudof - $?)"
+		echo "Errors trying to use sudo, check your password. Stopping."
+		abort
+	fi
+}
+
+prompt_yn() {
+	while true; do
+		read -r -p "$1 [y/n] " yn
+		case $yn in
+			[Yy]* ) return 0;;
+			[Nn]* ) return 1;;
+			* ) echo "Please answer yes or no.";;
+		esac
+	done
+}
+
+abort() {
+	BLA::stop_loading_animation
+	tput cnorm # Show cursor
+	echo "Something went wrong or user aborted. Stopping."
+	exit 1
+}
+
+# Run -------------------------------------------------------------------------
+
+trap abort SIGINT SIGTERM
+
+# Ask for user input at the start, nobody wants to babysit a script
+sudo_req
+
+up_pkgs="$(prompt_yn 'Do you with to upgrade all current installed packages?')"
+
+tput civis # Hide cursor
+
+log "[dot] Starting dotfiles..."
+e_header "Starting dotfiles"
+
+make_dir "$DOWN_DIR"
+
+# Make sure we have git
+if ! [ -x "$(command -v git)" ]; then
+	log "[dot] Installing git..."
+	en_arrow "Installing git"
+
+	if is_fedora; then
+		sudo_do "dnf install -qy git > /dev/null"
+	elif is_ubuntu; then
+		sudo_do "apt-get install -qy git > /dev/null"
+	else
+		e_error "Unknown distro, skipping git install"
+	fi
+
+	if ! [ -x "$(command -v git)" ]; then
+		log "[dot] Failed to install git, aborting."
+		er_error "Failed to install git, aborting."
+		abort
+	fi
+fi
+er_success "Git installed"
+
+# Get updated repo
+if ! [ -e "$DOTFILES" ]; then
+	log "[dot] Cloning dotfiles repository..."
+	en_arrow "Cloning repository"
+	git clone -q "$REPOURL" "$DOTFILES"
+else
+	log "[dot] Updating dotfiles repository..."
+	en_arrow "Updating repository"
+	cd "$DOTFILES" || (echo 'Cd command failed trying to update repo'; exit)
+	git fetch -q --all 
+	git pull -q
+fi
+er_success "Repository up to date"
+
+# Source ----------------------------------------------------------------------
+
+# noarch.sh must be imported before any distro-specific files
+# shellcheck source=../src/noarch.sh
+source "$DOTFILES/src/noarch.sh"
+
+if is_fedora; then
+	log "[dot] Sourcing fedora.sh"
+	# shellcheck source=../src/fedora.sh
+	source "$DOTFILES/src/fedora.sh"
+elif is_ubuntu; then
+	log "[dot] Sourcing ubuntu.sh"
+	# shellcheck source=../src/ubuntu.sh
+	source "$DOTFILES/src/ubuntu.sh"
+fi
+
+# shellcheck source=../vendor/bash_animations/bash_loading_animations.sh
+source "$DOTFILES/vendor/bash_animations/bash_loading_animations.sh"
+
+# I wanted to use submodules to load vendor/bash, but that would mean only
+# being able to use it after the submodule has been cloned. Well, that was a
+# waste of time. Thank you so much for the very open license.
+
+# Run -------------------------------------------------------------------------
+
+# Add /bin to PATH if not in it - https://stackoverflow.com/questions/1396066/
+if ! [[ ":$PATH:" == *":$BIN_DIR:"* ]]; then
+	export PATH="$PATH:$BIN_DIR"
+fi
+er_success "/bin in PATH"
+
+# Symlink everything in the link directory
+if [ "$(ls "$LINK_DIR")" ]; then
+	e_header "Symlinking"
+	for target in "$LINK_DIR"/*; do
+		symlink "$HOME/.$(basename "$target")" "$target"
+		e_success "Symlinked $(basename "$target")"
+	done
+fi
+
+# Run init scripts
+if [ "$(ls "$INIT_DIR")" ]; then
+	e_header "Running init scripts"
+	if [ -n "$sudop"  ]; then
+		for script in "$INIT_DIR"/*; do
+			e_header "init/$(shorten_initf "$script")"
+			run_script "$script"
+		done	
+	else
+		e_arrow "Sudo password required. Skipped."
+		log "[dot] User didn't provide sudo password, skipping init."
+	fi	
+fi
+
+# Cleanup
+delete_dir "$DOWN_DIR"
+
+log "[dot] Dotfiles up to date! (hopefully)"
+e_header "Dotfiles up to date! (hopefully)"; echo ''
+
+tput cnorm # Show cursor

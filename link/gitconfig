@@ -1,0 +1,15 @@
+[user]
+	email = EMAIL
+	name = fmbarina
+[alias]
+	co=checkout
+	br=branch
+	s=status
+	st=status
+	cm=commit -m
+	com=commit -m
+	unstage=reset HEAD --
+	uncommit=reset --soft HEAD^
+	un=unstage
+	fa=fetch --all
+	last=log -1 HEAD
