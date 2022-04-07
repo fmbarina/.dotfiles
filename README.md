@@ -17,7 +17,7 @@ With that out of the way, `bin/dotfiles` is the "dotfiles" command that makes th
 When dotfiles is run, the following happens.
 - Git is installed if necessary.*
 - The repository is cloned/updated in ~/ with aforementioned Git.
-- Dotfiles sources relevant files inside src/
+- Dotfiles sources relevant files inside src/ and vendor/
 - `bin/` - Everything here will be added to PATH.
 - `link/` - Everything here will be linked to the home directory.
 - `init/` - Everything here will be run once, if appropriate.
@@ -41,6 +41,7 @@ Much of this is post-install stuff, but made such that dotfiles is idempotent, i
 
 - `src/` just contains source files, some for specific distros.
 - `bkp/` - is generated when linking would overwrite anything.
+- `vendor/` - third party stuff
 
 ## Installation
 
