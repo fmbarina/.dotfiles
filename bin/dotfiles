@@ -121,6 +121,7 @@ sudo_req() {
 	fi
 
 	sudo_do "touch /etc"
+	echo ''
 }
 
 # This certainly isn't the best (or safest!) way to do this. Works for my case.
@@ -132,7 +133,7 @@ sudo_do() {
 	else
 		log "[sudo] Executing: $1"
 		
-		if [ -d $LOG_DIR ]; then
+		if [ -d "$LOG_DIR" ]; then
 			echo "$sudop" | sudo -S >> $LOG_SUD_FILE 2>>$LOG_SUD_FILE $1 && sudor=0 && return
 		else
 			echo "$sudop" | sudo -S 1> /dev/null $1 && sudor=0 && return
@@ -153,9 +154,8 @@ prompt_yn() {
 	while true; do
 		read -r -p "$1 [y/n] " yn
 		case $yn in
-			[Yy]* ) return 0;;
-			[Nn]* ) return 1;;
-			* ) echo "Please answer yes or no.";;
+			[Yy]*) return 0 ;;
+			[Nn]*) return 1 ;;
 		esac
 	done
 }
@@ -163,18 +163,19 @@ prompt_yn() {
 abort() {
 	BLA::stop_loading_animation
 	tput cnorm # Show cursor
-	echo "Something went wrong or user aborted. Stopping."
+	echo "Something went wrong or user interrupted. Stopping."
 	exit 1
 }
 
 # Run -------------------------------------------------------------------------
 
-trap abort SIGINT SIGTERM
+# Call abort funtion on user interruption/error to avoid breaking the terminal
+trap abort SIGINT SIGTERM EXIT
 
-# Ask for user input at the start, nobody wants to babysit a script
+# Ask user input at the beginning, nobody wants to babysit a script
 sudo_req
 
-up_pkgs="$(prompt_yn 'Do you with to upgrade all current installed packages?')"
+prompt_yn 'Upgrade all current installed packages?' && up_pkgs=y || up_pkgs=n
 
 tput civis # Hide cursor
 

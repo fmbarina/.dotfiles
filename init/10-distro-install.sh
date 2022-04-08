@@ -12,7 +12,7 @@ pm_update
 BLA::stop_loading_animation
 
 # Upgrade everything with package manager
-if $up_pkgs ; then
+if [ "$up_pkgs" == 'y' ] ; then
 	ern_arrow "Upgrading packages "
 	BLA::start_loading_animation "${BLA_classic[@]}"
 	pm_upgrade

@@ -13,7 +13,7 @@ BLA::start_loading_animation "${BLA_classic[@]}"
 brew_update
 BLA::stop_loading_animation
 
-if $up_pkgs ; then
+if [ "$up_pkgs" == 'y' ] ; then
 	ern_arrow "Upgrading casks and formulae "
 	BLA::start_loading_animation "${BLA_classic[@]}"
 	brew_upgrade
