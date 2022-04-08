@@ -19,7 +19,11 @@ if [ "$up_pkgs" == 'y' ] ; then
 	BLA::stop_loading_animation	
 fi
 
-er_success "Packages up to date" # TODO: what if they aren't though ha ha fix
+if [ "$up_pkgs" == 'y' ] ; then
+	er_success "Packages up to date" # TODO: what if they aren't though ha ha fix
+else
+	er_success "Package info updated"
+fi
 
 # Install package manager packages
 if ! pm_is_installed 'code'; then

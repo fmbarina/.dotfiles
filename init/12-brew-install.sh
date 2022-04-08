@@ -20,7 +20,11 @@ if [ "$up_pkgs" == 'y' ] ; then
 	BLA::stop_loading_animation	
 fi
 
-er_success "Brew up to date" # TODO: what if not though ha ha fix
+if [ "$up_pkgs" == 'y' ] ; then
+	er_success "Brew up to date" # TODO: what if not though ha ha fix
+else
+	er_success "Brew info updated"
+fi
 
 for pkg in "${brew_packages[@]}"; do
 	en_arrow "Checking $pkg"
