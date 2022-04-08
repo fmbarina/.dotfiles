@@ -28,19 +28,23 @@ When dotfiles is executed, the aforementioned happens by way of magic. Excessive
 *if git isn't installed and can't be installed, dotfiles gets mad and quits.
 
 ### About `bin`
+
 It's added to PATH, there really isn't much to it. These may be used by dotfiles itself.
 
 ### About `link`
+
 Stuff inside link/ is symlinked to ~/ with an added '.' at the front.
 
 Anything that would be overwritten is copied to `backup/`. If a symlink is detected and already points to the correct file, nothing changes.
 
 ### About `copy`
+
 Stuff inside copy/ is copied to ~/ with an added '.' at the front.
 
 Anything that would be overwritten is copied to `backup/`. Currently, no files are overwritten if a .installed file is detected inside dotfiles. If this file is removed, dotfiles will assume it has to copy the files regardless.
 
 ### About `init`
+
 Much of this is post-install stuff, some stuff is distro specific. For example, `distro-install.sh` only runs generic funtions, while their actual implementation depends on the sourced `distro.sh` file inside `src/`.
 
 ### Others
@@ -64,15 +68,17 @@ Alternatively, if you really wanna try these out for some reason, fork the repos
 
 ### For me
 
-I just run this:
+I run this:
 ```
 bash -c "$(wget -qO- https://raw.githubusercontent.com/fmbarina/.dotfiles/master/bin/dotfiles)" && source ~/.bashrc
 ```
 
 ## Inspiration
+
 Heavily inspired by this guy's [very cool dotfiles](https://github.com/cowboy/dotfiles), thanks cowboy. In fact, it might've easier to just use his, but I don't learn as well without doing things myself.
 
 I'd also like to thank the [dotfiles community](https://dotfiles.github.io) for all the amazing dotfiles and guides out there.
 
 ## License
+
 MIT License, see LICENSE for more details.

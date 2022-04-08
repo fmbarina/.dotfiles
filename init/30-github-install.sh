@@ -12,13 +12,13 @@
 
 gh_is_installed() {
 	local found
-	log "[no-arch] Checking if non-pm package installed: $1"
+	log "[nodist] Checking if non-pm package installed: $1"
 	found="$(find /opt -maxdepth 5 -name "*${1}*" -print)"
 
 	if [ -n "$found" ]; then
-		log "[no-arch] Found: $1" ; return 0
+		log "[nodist] Found: $1" ; return 0
 	else
-		log "[no-arch] Could not find: $1" ; return 1
+		log "[nodist] Could not find: $1" ; return 1
 	fi
 }
 
