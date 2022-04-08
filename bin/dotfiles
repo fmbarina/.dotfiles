@@ -7,6 +7,7 @@ REPOURL="https://github.com/fmbarina/.dotfiles.git"
 DOTFILES="$HOME/.dotfiles"
 BIN_DIR="$DOTFILES/bin"
 LINK_DIR="$DOTFILES/link"
+COPY_DIR="$DOTFILES/copy"
 INIT_DIR="$DOTFILES/init"
 BKP_DIR="$DOTFILES/backup"
 
@@ -26,6 +27,8 @@ declare -i sudol=1  # sudo failures allowed (will exit if greater than)
 # TODO: Might wanna learn how to use actual custom args
 enable_log=yes # ha ha yes to be fixed later
 
+[ -e "$DOTFILES/.installed" ] && INSTALLED=yes || INSTALLED=no
+
 # Functions -------------------------------------------------------------------
 
 # Some functions are in the dotfiles script so they can be used
@@ -41,17 +44,17 @@ e_success()   { echo -e  " \033[1;32m✔\033[0m $1"; }
 e_error()     { echo -e  " \033[1;31m✖\033[0m $1"; }
 e_arrow()     { echo -e  " \033[1;34m➜\033[0m $1"; }
 # Reprint current line
-er_success()  { echo -e  "\033[2K\r\033[1;32m✔\033[0m $1"; }
-er_error()    { echo -e  "\033[2K\r\033[1;31m✖\033[0m $1"; }
-er_arrow()    { echo -e  "\033[2K\r\033[1;34m➜\033[0m $1"; }
+er_success()  { echo -e  " \033[2K\r \033[1;32m✔\033[0m $1"; }
+er_error()    { echo -e  " \033[2K\r \033[1;31m✖\033[0m $1"; }
+er_arrow()    { echo -e  " \033[2K\r \033[1;34m➜\033[0m $1"; }
 # Print without newline at the end
 en_success()  { echo -en " \033[1;32m✔\033[0m $1"; }
 en_error()    { echo -en " \033[1;31m✖\033[0m $1"; }
 en_arrow()    { echo -en " \033[1;34m➜\033[0m $1"; }
 # Reprint current line without newline at the end
-ern_success() { echo -en "\033[2K\r\033[1;32m✔\033[0m $1"; }
-ern_error()   { echo -en "\033[2K\r\033[1;31m✖\033[0m $1"; }
-ern_arrow()   { echo -en "\033[2K\r\033[1;34m➜\033[0m $1"; }
+ern_success() { echo -en " \033[2K\r \033[1;32m✔\033[0m $1"; }
+ern_error()   { echo -en " \033[2K\r \033[1;31m✖\033[0m $1"; }
+ern_arrow()   { echo -en " \033[2K\r \033[1;34m➜\033[0m $1"; }
 
 e_erase_cur() { echo -en "\033[2K\r"; } # Erase current line
 
@@ -75,15 +78,6 @@ make_dir() {
 	else
 		log "[make_dir] Creating directory $1"
 		mkdir -p "$1"
-	fi
-}
-
-delete_dir() {
-	if [ -d "$1" ]; then
-		log "[delete_dir] Deleting directory $1"
-		rm -rf "$1"
-	else
-		log "[delete_dir] Directory $1 does not exist"
 	fi
 }
 
@@ -184,14 +178,14 @@ up_pkgs="$(prompt_yn 'Do you with to upgrade all current installed packages?')"
 
 tput civis # Hide cursor
 
-log "[dot] Starting dotfiles..."
+log "[dotfiles] Starting dotfiles..."
 e_header "Starting dotfiles"
 
 make_dir "$DOWN_DIR"
 
 # Make sure we have git
 if ! [ -x "$(command -v git)" ]; then
-	log "[dot] Installing git..."
+	log "[dotfiles] Installing git..."
 	en_arrow "Installing git"
 
 	if is_fedora; then
@@ -203,7 +197,7 @@ if ! [ -x "$(command -v git)" ]; then
 	fi
 
 	if ! [ -x "$(command -v git)" ]; then
-		log "[dot] Failed to install git, aborting."
+		log "[dotfiles] Failed to install git, aborting."
 		er_error "Failed to install git, aborting."
 		abort
 	fi
@@ -212,11 +206,11 @@ er_success "Git installed"
 
 # Get updated repo
 if ! [ -e "$DOTFILES" ]; then
-	log "[dot] Cloning dotfiles repository..."
+	log "[dotfiles] Cloning dotfiles repository..."
 	en_arrow "Cloning repository"
 	git clone -q "$REPOURL" "$DOTFILES"
 else
-	log "[dot] Updating dotfiles repository..."
+	log "[dotfiles] Updating dotfiles repository..."
 	en_arrow "Updating repository"
 	cd "$DOTFILES" || (echo 'Cd command failed trying to update repo'; exit)
 	git fetch -q --all 
@@ -231,11 +225,11 @@ er_success "Repository up to date"
 source "$DOTFILES/src/nodist.sh"
 
 if is_fedora; then
-	log "[dot] Sourcing fedora.sh"
+	log "[dotfiles] Sourcing fedora.sh"
 	# shellcheck source=../src/fedora.sh
 	source "$DOTFILES/src/fedora.sh"
 elif is_ubuntu; then
-	log "[dot] Sourcing ubuntu.sh"
+	log "[dotfiles] Sourcing ubuntu.sh"
 	# shellcheck source=../src/ubuntu.sh
 	source "$DOTFILES/src/ubuntu.sh"
 fi
@@ -264,6 +258,15 @@ if [ "$(ls "$LINK_DIR")" ]; then
 	done
 fi
 
+# Copy everything in the copy directory
+if [ "$(ls "$COPY_DIR")" ]; then
+	e_header "Copying"
+	for item in "$COPY_DIR"/*; do
+		copy "$item" "$HOME/.$(basename "$item")"
+		e_success "Copied $(basename "$item")"
+	done
+fi
+
 # Run init scripts
 if [ "$(ls "$INIT_DIR")" ]; then
 	e_header "Running init scripts"
@@ -274,14 +277,17 @@ if [ "$(ls "$INIT_DIR")" ]; then
 		done	
 	else
 		e_arrow "Sudo password required. Skipped."
-		log "[dot] User didn't provide sudo password, skipping init."
+		log "[dotfiles] User didn't provide sudo password, skipping init."
 	fi	
 fi
 
 # Cleanup
-delete_dir "$DOWN_DIR"
+delete "$DOWN_DIR"
 
-log "[dot] Dotfiles up to date! (hopefully)"
+# Mark dotfiles run
+touch "$DOTFILES/.installed"
+
+log "[dotfiles] Dotfiles up to date! (hopefully)"
 e_header "Dotfiles up to date! (hopefully)"; echo ''
 
 tput cnorm # Show cursor

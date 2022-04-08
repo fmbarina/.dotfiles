@@ -31,7 +31,7 @@ delete() {
 		log "[delete] Deleting $1"
 		rm -rf "$1"
 	else
-		log "[delete] File $1 does not exist"
+		log "[delete] File/dir does not exist: $1"
 	fi
 }
 
@@ -39,45 +39,88 @@ backup() {
 	src="$1"
 	
 	if ! [ -e "$src" ]; then
-		log "[bkp] Can not backup nonexistent target: $src"
+		log "[backup] Can not backup nonexistent target: $src"
 		abort
 	fi
 
 	if ! [ -e "$BKP_DIR" ]; then
-		log '[bkp] Creating backup directory...'
-		mkdir -p "$BKP_DIR"
+		make_dir "$BKP_DIR"
 	elif [ -e "$BKP_DIR/$src" ]; then
-		log "[bkp] $src already exists, stopped. Please remove or rename it."
+		log "[backup] $src already exists, stopped. Please remove or rename it."
 		abort
 	fi
 
 	if [ -d "$src" ]; then
-		log "[bkp] Backing up directory: $src"
+		log "[backup] Backing up directory: $src"
 		cp -r "$src" "$BKP_DIR"
 	else
-		log "[bkp] Backing up file: $src"
+		log "[backup] Backing up file: $src"
 		cp "$src" "$BKP_DIR"
 	fi
+}
+
+rsymlink() {
+	link="$1"
+
+	if ! [ -L "$link" ]; then
+		log "[rsymlink] Not a link: $link"
+		log "[rsymlink] Stopping"
+		abort
+	fi
+
+	echo "$(readlink -f $link)"
 }
 
 symlink() {
 	link="$1"
 	tgt="$2"
+	local points
 
 	if [ -e "$link" ]; then
 		if [ -L "$link" ]; then
+			points=$(rsymlink "$link")
+			if [ "$points" == "$tgt" ]; then
+				log "[link] Already linked $link" && return
+			fi
+
 			log "[link] Symlink already exists: $link"
 		else
 			log "[link] Directory or file already exists: $link"
-			backup "$link"
-			log "[link] Removing old file: $link"
-			delete "$link"
 		fi
+
+		backup "$link"
+		log "[link] Removing old file: $link"
+		delete "$link"
 	fi
 	
 	if ! [ -e "$link" ]; then
 		log "[link] Creating symlink: $link"
 		ln -s "$tgt" "$link" # this command confuses me greatly!
+	else
+		log "[link] Could not create symlink: $link"
+	fi
+}
+
+copy() {
+	src="$1"
+	dest="$2"
+
+	if [ -e "$dest" ]; then
+		if [ "$INSTALLED" == 'yes' ]; then
+			log "[copy] Already copied $dest" && return
+		fi
+		
+		log "[copy] File already exists: $dest"
+		backup "$dest"
+		log "[copy] Removing old file: $dest"
+		delete "$dest"
+	fi
+	
+	if ! [ -e "$dest" ]; then
+		log "[copy] Copying: $src To: $dest"
+		cp -r "$src" "$dest"
+	else
+		log "[copy] Could not copy $link"
 	fi
 }
 

@@ -20,9 +20,10 @@ When dotfiles is run, the following happens.
 - Dotfiles sources relevant files inside src/ and vendor/
 - `bin/` - Everything here will be added to PATH.
 - `link/` - Everything here will be linked to the home directory.
+- `copy/` - Everything here will be copied to the home directory.
 - `init/` - Everything here will be run once, if appropriate.
 
-When dotfiles is executed, the aforementioned happens by way of magic. Excessively verbose logs are also generated for my viewing pleasure.
+When dotfiles is executed, the aforementioned happens by way of magic. Excessively verbose logs are also generated for my viewing pleasure. Ideally, dotfiles is idempotent, so links won't be recreated, copied files won't be overwritten, etc.
 
 *if git isn't installed and can't be installed, dotfiles gets mad and quits.
 
@@ -35,7 +36,7 @@ Stuff inside link/ is symlinked to ~/ with an added '.' at the front.
 If anything would be overwritten by the link step, it is copied to `backup/`. If a symlink is detected, nothing will happen - dotfiles assumes things have already been properly linked.
 
 ### About `init`
-Much of this is post-install stuff, but made such that dotfiles is idempotent, i.e. same result always. Some stuff is distro specific. For example, `distro-install.sh` only runs generic funtions, while their actual implementation depends on the sourced `distro.sh` file inside `src/`.
+Much of this is post-install stuff, some stuff is distro specific. For example, `distro-install.sh` only runs generic funtions, while their actual implementation depends on the sourced `distro.sh` file inside `src/`.
 
 ### Others
 
