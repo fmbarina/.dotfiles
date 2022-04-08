@@ -8,13 +8,13 @@
 
 # Run -------------------------------------------------------------------------
 
-en_arrow "Updating brew and formulae"
+en_arrow "Updating brew and formulae "
 BLA::start_loading_animation "${BLA_classic[@]}"
 brew_update
 BLA::stop_loading_animation
 
 if $up_pkgs ; then
-	ern_arrow "Upgrading casks and formulae"
+	ern_arrow "Upgrading casks and formulae "
 	BLA::start_loading_animation "${BLA_classic[@]}"
 	brew_upgrade
 	BLA::stop_loading_animation	

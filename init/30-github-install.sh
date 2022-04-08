@@ -25,7 +25,7 @@ gh_is_installed() {
 # Run -------------------------------------------------------------------------
 
 for pkg in "${!gh_packages[@]}"; do
-	en_arrow "Checking $pkg"
+	en_arrow "Checking $pkg "
 	
 	# Try to install the package if it isn't installed yet
 	if ! gh_is_installed "$pkg"; then

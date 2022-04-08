@@ -6,14 +6,14 @@
 # Run -------------------------------------------------------------------------
 
 # Update the package list
-en_arrow "Updating information"
+en_arrow "Updating information "
 BLA::start_loading_animation "${BLA_classic[@]}"
 pm_update
 BLA::stop_loading_animation
 
 # Upgrade everything with package manager
 if $up_pkgs ; then
-	ern_arrow "Upgrading packages"
+	ern_arrow "Upgrading packages "
 	BLA::start_loading_animation "${BLA_classic[@]}"
 	pm_upgrade
 	BLA::stop_loading_animation	
