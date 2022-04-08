@@ -170,7 +170,7 @@ abort() {
 # Run -------------------------------------------------------------------------
 
 # Call abort funtion on user interruption/error to avoid breaking the terminal
-trap abort SIGINT SIGTERM EXIT
+trap abort SIGINT SIGTERM
 
 # Ask user input at the beginning, nobody wants to babysit a script
 sudo_req
