@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 # If pip not installed, skip this file
-! (pm_is_installed pip) && log "[pip] Pip not installed. Skipping." && return
+! (pm_is_installed python3-pip) \
+	&& log "[pip] Pip not installed. Skipping." && return
 
 # Run -------------------------------------------------------------------------
 
