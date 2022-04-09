@@ -36,6 +36,8 @@ delete() {
 }
 
 backup() {
+	local src
+
 	src="$1"
 	
 	if ! [ -e "$src" ]; then
@@ -60,6 +62,8 @@ backup() {
 }
 
 rsymlink() {
+	local link
+
 	link="$1"
 
 	if ! [ -L "$link" ]; then
@@ -68,13 +72,17 @@ rsymlink() {
 		abort
 	fi
 
+	# Shellcheck may call it useless, but the echo is necessary for string comp
 	echo "$(readlink -f $link)"
 }
 
 symlink() {
+	local link
+	local tgt
+	local points
+	
 	link="$1"
 	tgt="$2"
-	local points
 
 	if [ -e "$link" ]; then
 		if [ -L "$link" ]; then
@@ -102,6 +110,9 @@ symlink() {
 }
 
 copy() {
+	local src
+	local dest
+
 	src="$1"
 	dest="$2"
 
@@ -155,11 +166,13 @@ download() {
 get_de() {
 	# Get desktop environment
 	local denv
+
 	if [ "$XDG_CURRENT_DESKTOP" = "" ]; then
 		denv=$(echo "$XDG_DATA_DIRS" | sed 's/.*\(xfce\|kde\|gnome\).*/\1/')
 	else
 		denv=$XDG_CURRENT_DESKTOP
 	fi
+	
 	denv=${denv,,}  # convert to lower case
 	echo "$denv"
 }
