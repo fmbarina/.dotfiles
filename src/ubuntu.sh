@@ -28,7 +28,7 @@ pm_packages=(
 	vim                  # Enhanced-vim text editor
 	code                 # vscode 
 	# jetbrains-mono-fonts # Jetbrains font for coding, very pretty # TODO: not working, consider switching to download and manually install
-	ShellCheck           # Bash/sh shell script linter
+	shellcheck           # Bash/sh shell script linter
 	gnome-tweaks         # Gnome tweak enhancements
 )
 
