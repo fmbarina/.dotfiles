@@ -193,7 +193,7 @@ pip_install() {
 	fi
 }
 
-is_brew_installed() {
+is_there_brew() {
 	# This fails if Homebrew is installed at a different location, nevermind 
 	# trying to run this on a mac. Since this issue does not concern my case, 
 	# I'm won't bother fixing it. A warning, in case you plan on using this.
@@ -215,7 +215,7 @@ install_brew() {
 	_install_brew
 	/bin/bash -c "NONINTERACTIVE=1 $script" 1>>"$LOG_OTH_FILE" 2>&1
 
-	if is_brew_installed; then
+	if is_there_brew; then
 		log "[dependencies] Homebrew installed"
 	else
 		log "[dependencies] Failed to install Homebrew"

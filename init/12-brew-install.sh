@@ -3,10 +3,25 @@
 # Not all packages are born equal... some are only updated in Homebrew
 # A huge thank you to all package mantainers for their work
 
-# If brew is not installed, skip this file
-! is_brew_installed && log "[brew-install] brew not installed. Skipping." && return
-
 # Run -------------------------------------------------------------------------
+
+# Attemt to install homebrew first
+en_arrow "Checking homebrew... "
+if ! is_there_brew; then
+	ern_arrow "Installing Homebrew "
+	BLA::start_loading_animation "${BLA_classic[@]}"
+	install_brew
+	BLA::stop_loading_animation
+fi
+
+if is_there_brew; then
+	er_success "Homebrew installed"
+else
+	er_error "Failed to install Homebrew."
+fi
+
+# If brew is not installed, skip the rest of the file
+! is_there_brew && log "[brew-install] brew not installed. Skipping." && return
 
 en_arrow "Updating brew and formulae "
 BLA::start_loading_animation "${BLA_classic[@]}"
