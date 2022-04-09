@@ -7,7 +7,7 @@
 ### Homebrew ###
 en_arrow "Checking homebrew... "
 if ! is_brew_installed; then
-	ern_arrow "Installing Homebrew"
+	ern_arrow "Installing Homebrew "
 	BLA::start_loading_animation "${BLA_classic[@]}"
 	install_brew
 	BLA::stop_loading_animation
