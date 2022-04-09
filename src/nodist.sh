@@ -227,11 +227,11 @@ install_brew() {
 
 # TODO: This is unused at the moment, no plans to use it yet.
 uninstall_brew() {
-    log "[dependencies] Unistalling brew"
-    local script
-    script="https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh"
-    script=$(wget -qO- $script)
-    echo "$sudop" | /bin/bash -c "$script" -- -f 1>>"$LOG_OTH_FILE" 2>&1
+	log "[dependencies] Unistalling brew"
+	local script
+	script="https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh"
+	script=$(wget -qO- $script)
+	echo "$sudop" | /bin/bash -c "$script" -- -f 1>>"$LOG_OTH_FILE" 2>&1
 	delete "/home/linuxbrew"
 }
 
@@ -300,17 +300,17 @@ install_file() {
 }
 
 pm_update() {
-    log "[$log_dist] Updating packages"
+	log "[$log_dist] Updating packages"
 	_pm_update
 }
 
 pm_upgrade() {
-    log "[$log_dist] Upgrading packages"
+	log "[$log_dist] Upgrading packages"
 	_pm_upgrade
 }
 
 pm_clean() {
-    log "[$log_dist] Cleaning packages"
+	log "[$log_dist] Cleaning packages"
 	_pm_clean
 }
 
@@ -331,6 +331,6 @@ pm_install() {
 }
 
 vscode_add() {
-    log "[$log_dist] Adding vscode source"
+	log "[$log_dist] Adding vscode source"
 	_vscode_add
 }
