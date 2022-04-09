@@ -190,9 +190,9 @@ if ! [ -x "$(command -v git)" ]; then
 	en_arrow "Installing git"
 
 	if is_fedora; then
-		sudo_do "dnf install -qy git > /dev/null"
+		sudo_do "dnf install -qy git"
 	elif is_ubuntu; then
-		sudo_do "apt-get install -qy git > /dev/null"
+		sudo_do "apt-get install -qy git"
 	else
 		e_error "Unknown distro, skipping git install"
 	fi
