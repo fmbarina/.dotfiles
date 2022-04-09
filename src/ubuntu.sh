@@ -30,6 +30,7 @@ pm_packages=(
 	# jetbrains-mono-fonts # Jetbrains font for coding, very pretty # TODO: not working, consider switching to download and manually install
 	shellcheck           # Bash/sh shell script linter
 	gnome-tweaks         # Gnome tweak enhancements
+	python-is-python3    # python to python3 symlink
 )
 
 # Array of key&value pairs as (keyname)&(username/repo)
