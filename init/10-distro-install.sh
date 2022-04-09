@@ -5,6 +5,14 @@
 
 # Run -------------------------------------------------------------------------
 
+# Add vscode source
+if ! pm_is_installed 'code'; then
+	vscode_add # VSCode is special because it has to be added first
+	# TODO: OBS: there may be other such packages in the future, (ex: older php 
+	# versions) so it's worth considering setting up proper functions to do so 
+	# or similar and refactoring vscode_add() to use them.
+fi
+
 # Update the package list
 en_arrow "Updating information "
 BLA::start_loading_animation "${BLA_classic[@]}"
@@ -26,13 +34,6 @@ else
 fi
 
 # Install package manager packages
-if ! pm_is_installed 'code'; then
-	vscode_add # VSCode is special because it has to be added first
-	# TODO: OBS: there may be other such packages in the future, (ex: older php 
-	# versions) so it's worth considering setting up proper functions to do so 
-	# or similar and refactoring vscode_add() to use them.
-fi
-
 for pkg in "${pm_packages[@]}"; do
 	en_arrow "Checking $pkg"
 

@@ -59,7 +59,7 @@ _pm_clean() {
 }
 
 _pm_is_installed() {
-	dpkg -s "$1" > "$LOG_OTH_FILE" 2>&1 | \
+	dpkg -s "$1" 2>&1 | \
 		grep Status > "$LOG_OTH_FILE" 2>&1 && return 0 || return 1
 }
 
