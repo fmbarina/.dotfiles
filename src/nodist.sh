@@ -212,8 +212,8 @@ install_brew() {
 	script="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
 	script="$(wget -qO- $script)"
 
+	_install_brew
 	/bin/bash -c "NONINTERACTIVE=1 $script" 1>>"$LOG_OTH_FILE" 2>&1
-	sudo_do "yum groupinstall 'Development Tools'"
 
 	if is_brew_installed; then
 		log "[dependencies] Homebrew installed"

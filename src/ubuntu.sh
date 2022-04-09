@@ -74,3 +74,7 @@ _vscode_add() {
 	delete "packages.microsoft.gpg"
 	sudo_do "apt-get install -y apt-transport-https"
 }
+
+_install_brew() {
+	sudo_do "apt-get install build-essential"
+}

@@ -71,3 +71,7 @@ _vscode_add() {
 	sudo_do 'touch /etc/yum.repos.d/vscode.repo'
 	echo "$sudop" | sudo -S sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
 }
+
+_install_brew() {
+	sudo_do "dnf install @development-tools"
+}
