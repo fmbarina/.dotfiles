@@ -14,7 +14,6 @@ With that out of the way, `bin/dotfiles` is the "dotfiles" command that makes th
 
 ## How it works
 
-When dotfiles is run, the following happens.
 - Git is installed if necessary.*
 - The repository is cloned/updated in ~/ with aforementioned Git.
 - Dotfiles sources relevant files inside src/ and vendor/
@@ -45,7 +44,7 @@ Anything that would be overwritten is copied to `backup/`. Currently, no files a
 
 ### About `init`
 
-Much of this is post-install stuff, some stuff is distro specific. For example, `distro-install.sh` only runs generic funtions, while their actual implementation depends on the sourced `distro.sh` file inside `src/`.
+Much of this is post-install stuff, some stuff is distro specific. For example, `distro-install.sh` only runs generic functions, while their actual implementation depends on the sourced `distro.sh` file inside `src/`.
 
 ### Others
 
