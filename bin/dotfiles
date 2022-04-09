@@ -120,7 +120,7 @@ sudo_req() {
 		fi  
 	fi
 
-	sudo_do "touch /etc"
+	sudo_do "touch /etc" 1> /dev/null
 	echo ''
 }
 
