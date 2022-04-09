@@ -73,5 +73,5 @@ _vscode_add() {
 }
 
 _install_brew() {
-	sudo_do "dnf install @development-tools"
+	sudo_do "dnf install --assumeyes @development-tools"
 }

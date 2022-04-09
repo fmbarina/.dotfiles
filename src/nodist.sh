@@ -211,16 +211,16 @@ is_there_brew() {
 	# This fails if Homebrew is installed at a different location, nevermind 
 	# trying to run this on a mac. Since this issue does not concern my case, 
 	# I'm won't bother fixing it. A warning, in case you plan on using this.
-	log "[dependencies] Checking if brew package installed"
+	log "[brew] Checking if brew package installed"
 	if [ -e "$brewpath" ]; then
-		log "[dependencies] brew installed" ; return 0
+		log "[brew] brew installed" ; return 0
 	else
-		log "[dependencies] brew not installed" ; return 1
+		log "[brew] brew not installed" ; return 1
 	fi
 }
 
 install_brew() {
-	log "[dependencies] Installing Homebrew"
+	log "[brew] Installing Homebrew"
 
 	local script
 	script="https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
@@ -230,9 +230,9 @@ install_brew() {
 	/bin/bash -c "NONINTERACTIVE=1 $script" 1>>"$LOG_OTH_FILE" 2>&1
 
 	if is_there_brew; then
-		log "[dependencies] Homebrew installed"
+		log "[brew] Homebrew installed"
 	else
-		log "[dependencies] Failed to install Homebrew"
+		log "[brew] Failed to install Homebrew"
 	fi
 	
 	# Add brew command for the rest of dotfiles execution
@@ -241,7 +241,7 @@ install_brew() {
 
 # TODO: This is unused at the moment, no plans to use it yet.
 uninstall_brew() {
-	log "[dependencies] Unistalling brew"
+	log "[brew] Unistalling brew"
 	local script
 	script="https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh"
 	script=$(wget -qO- $script)

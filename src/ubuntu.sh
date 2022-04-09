@@ -79,5 +79,5 @@ _vscode_add() {
 }
 
 _install_brew() {
-	sudo_do "apt-get install build-essential"
+	sudo_do "apt-get install --assume-yes build-essential"
 }
