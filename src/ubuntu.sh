@@ -41,7 +41,7 @@ gh_packages['logisim']='logisim-evolution/logisim-evolution'
 # Functions -------------------------------------------------------------------
 
 _install_file() {
-	sudo_do "sudo apt -y install $1"
+	sudo_do "dpkg --install $1"
 }
 
 _pm_update() {
@@ -57,7 +57,7 @@ _pm_clean() {
 }
 
 _pm_is_installed() {
-	dpkg -l "$1" > /dev/null 2>&1 && return 0 || return 1
+	dpkg -s "$1" | grep Status > /dev/null 2>&1 && return 0 || return 1
 }
 
 _pm_install() {
