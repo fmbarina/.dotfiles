@@ -27,7 +27,8 @@ pm_packages=(
 	neofetch             # Pretty CLI system information just because
 	vim                  # Enhanced-vim text editor
 	code                 # vscode 
-	# jetbrains-mono-fonts # Jetbrains font for coding, very pretty # TODO: not working, consider switching to download and manually install
+	# jetbrains-mono-fonts # Jetbrains font for coding, very pretty 
+	# TODO: not working, consider switching to download and manually install
 	shellcheck           # Bash/sh shell script linter
 	gnome-tweaks         # Gnome tweak enhancements
 	python-is-python3    # python to python3 symlink
@@ -58,7 +59,8 @@ _pm_clean() {
 }
 
 _pm_is_installed() {
-	dpkg -s "$1" | grep Status > /dev/null 2>&1 && return 0 || return 1
+	dpkg -s "$1" > "$LOG_OTH_FILE" 2>&1 | \
+		grep Status > "$LOG_OTH_FILE" 2>&1 && return 0 || return 1
 }
 
 _pm_install() {
