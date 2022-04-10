@@ -8,20 +8,6 @@
 # If not running a known distro, skip this file
 ! is_known_distro && log "[github_install] Unkown distro. Skipping." && return
 
-# Functions -------------------------------------------------------------------
-
-gh_is_installed() {
-	local found
-	log "[nodist] Checking if non-pm package installed: $1"
-	found="$(find /opt -maxdepth 5 -name "*${1}*" -print)"
-
-	if [ -n "$found" ]; then
-		log "[nodist] Found: $1" ; return 0
-	else
-		log "[nodist] Could not find: $1" ; return 1
-	fi
-}
-
 # Run -------------------------------------------------------------------------
 
 for pkg in "${!gh_packages[@]}"; do

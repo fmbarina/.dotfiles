@@ -182,7 +182,23 @@ is_gnome() {
 	[[ "$(get_de)" = *"gnome"* ]]
 }
 
-### Stuff that doesn't depend on a specific distro ###
+### github ###
+
+# Not really github specific, but that's what it's used for by dotfiles
+
+gh_is_installed() {
+	local found
+	log "[nodist] Checking if non-pm package installed: $1"
+	found="$(find /opt -maxdepth 5 -name "*${1}*" -print)"
+
+	if [ -n "$found" ]; then
+		log "[nodist] Found: $1" ; return 0
+	else
+		log "[nodist] Could not find: $1" ; return 1
+	fi
+}
+
+### pip ###
 
 pip_is_installed() {
 	local found
@@ -206,6 +222,8 @@ pip_install() {
 		log "[pip] Failed to install $1"
 	fi
 }
+
+### Brew ###
 
 is_there_brew() {
 	# This fails if Homebrew is installed at a different location, nevermind 
@@ -292,6 +310,8 @@ brew_install_cask() {
 		log "[brew] Failed to install cask $1"
 	fi
 }
+
+### rust ###
 
 # TODO: consider install rust automatically or manually
 # Not every computer needs rust...? Nah they do. Unless... Yeah rust. No. Rust?
