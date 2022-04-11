@@ -10,6 +10,7 @@ LINK_DIR="$DOTFILES/link"
 COPY_DIR="$DOTFILES/copy"
 INIT_DIR="$DOTFILES/init"
 BKP_DIR="$DOTFILES/backup"
+FONT_DIR="$DOTFILES/misc/fonts"
 
 # If $VAR undefined, define it
 [ -z "$DOWN_DIR" ] && DOWN_DIR="$HOME/Downloads/tmpdotfiles"
@@ -73,6 +74,7 @@ log() {
 }
 
 make_dir() {
+	# I want to know if the directory already existed before
 	if [ -d "$1" ]; then
 		log "[make_dir] Directory $1 already exists"
 	else
