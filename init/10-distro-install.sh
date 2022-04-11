@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # If not running a known distro, skip this file
-! is_known_distro && log "[distro_install] Unkown distro. Skipping." && return
+! is_known_distro && log "[distro-install] Unkown distro. Skipping." && return
 
 # Run -------------------------------------------------------------------------
 
@@ -49,7 +49,7 @@ for pkg in "${pm_packages[@]}"; do
 	if pm_is_installed "$pkg"; then
 		er_success "$pkg installed"
 	else
-		er_error "Failed to install $pkg"
+		er_error "$pkg could not be installed"
 	fi
 done
 

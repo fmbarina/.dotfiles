@@ -34,6 +34,6 @@ for pkg in "${!gh_packages[@]}"; do
 	if gh_is_installed "$pkg"; then
 		er_success "$pkg installed"
 	else
-		er_error "Failed to install $pkg"
+		er_error "$pkg could not be installed"
 	fi	
 done

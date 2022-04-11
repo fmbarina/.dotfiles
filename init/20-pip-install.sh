@@ -25,6 +25,6 @@ for pkg in "${pip_packages[@]}"; do
 	if pip_is_installed "$pkg"; then
 		er_success "$pkg installed"
 	else
-		er_error "Failed to install $pkg"
+		er_error "$pkg could not be installed"
 	fi	
 done

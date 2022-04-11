@@ -58,6 +58,6 @@ for pkg in "${brew_packages[@]}"; do
 	if brew_is_installed "$pkg"; then
 		er_success "$pkg installed"
 	else
-		er_error "Failed to install $pkg"
+		er_error "$pkg could not be installed"
 	fi
 done

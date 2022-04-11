@@ -55,10 +55,10 @@ backup() {
 
 	if [ -d "$src" ]; then
 		log "[backup] Backing up directory: $src"
-		cp -r "$src" "$BKP_DIR"
+		copy "$src" "$BKP_DIR"
 	else
 		log "[backup] Backing up file: $src"
-		cp "$src" "$BKP_DIR"
+		copy "$src" "$BKP_DIR"
 	fi
 }
 
