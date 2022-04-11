@@ -4,21 +4,21 @@
 
 REPOURL="https://github.com/fmbarina/.dotfiles.git" 
 
-DOTFILES="$HOME/.dotfiles"
-BIN_DIR="$DOTFILES/bin"
-LINK_DIR="$DOTFILES/link"
-COPY_DIR="$DOTFILES/copy"
-INIT_DIR="$DOTFILES/init"
-BKP_DIR="$DOTFILES/backup"
-FONT_DIR="$DOTFILES/misc/fonts"
+readonly DOTFILES="$HOME/.dotfiles"
+readonly BIN_DIR="$DOTFILES/bin"
+readonly LINK_DIR="$DOTFILES/link"
+readonly COPY_DIR="$DOTFILES/copy"
+readonly INIT_DIR="$DOTFILES/init"
+readonly BKP_DIR="$DOTFILES/backup"
+readonly FONT_DIR="$DOTFILES/misc/fonts"
 
 # If $VAR undefined, define it
-[ -z "$DOWN_DIR" ] && DOWN_DIR="$HOME/Downloads/tmpdotfiles"
-[ -z "$LOG_DIR" ] && LOG_DIR="$DOTFILES"
+[ -z "$DOWN_DIR" ] && readonly DOWN_DIR="$HOME/Downloads/tmpdotfiles"
+[ -z "$LOG_DIR" ] && readonly LOG_DIR="$DOTFILES"
 
-LOG_DOT_FILE="$LOG_DIR/dotfiles.log"
-LOG_SUD_FILE="$LOG_DIR/sudo.log"
-LOG_OTH_FILE="$LOG_DIR/other.log"
+readonly LOG_DOT_FILE="$LOG_DIR/dotfiles.log"
+readonly LOG_SUD_FILE="$LOG_DIR/sudo.log"
+readonly LOG_OTH_FILE="$LOG_DIR/other.log"
 
 sudop=              # sudo password
 declare -i sudor=0  # return value for sudo_do
@@ -165,7 +165,7 @@ prompt_yn() {
 abort() {
 	BLA::stop_loading_animation
 	tput cnorm # Show cursor
-	echo "Something went wrong or user interrupted. Stopping."
+	echo >&2 "Something went wrong or user interrupted. Stopping."
 	exit 1
 }
 

@@ -25,7 +25,6 @@ pm_packages=(
 	trash-cli            # Trash cli tool
 	neofetch             # Pretty CLI system information just because
 	vim                  # Enhanced-vim text editor
-	jetbrains-mono-fonts # Jetbrains font for coding, very pretty
 	ShellCheck           # Bash/sh shell script linter
 	gnome-tweaks         # Gnome tweak enhancements
 	code                 # VSCode

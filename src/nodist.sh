@@ -136,6 +136,17 @@ copy() {
 	fi
 }
 
+extract() {
+	local compacted
+	local dest
+	compacted="$1"
+	dest="$2"
+
+	log "[extract] Extracting $compacted to $dest"
+	tar --directory "$dest" \
+		--extract --overwrite --file "$compacted" 1>"$LOG_OTH_FILE"
+}
+
 run_script() {
 	log "[run] Running: $1"
 	# shellcheck source=/dev/null
@@ -147,6 +158,12 @@ shorten_initf() {
 	header_name="$(basename "$1")"
 	header_name="${header_name:3:(-3)}"
 	echo "$header_name"
+}
+
+remove_extension() {
+	local file_name
+	file_name="$(basename "$1")"
+	echo "${file_name%.*}"
 }
 
 ### Web ###

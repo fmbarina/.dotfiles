@@ -15,18 +15,38 @@ FONT_DST_DIR="$HOME/.local/share/fonts"
 e_header "Installing fonts"
 
 make_dir "$FONT_DST_DIR"
+make_dir "$FONT_DIR/.extract"
 
-for font in "$FONT_DIR"/*; do
-    if ! [ -e "$FONT_DST_DIR/$(basename "$font")" ]; then
-        log "[fonts] Installing $font"
-        copy "$FONT_DIR/$(basename "$font")" "$FONT_DST_DIR/$(basename "$font")"
+for obj in "$FONT_DIR"/*; do
+    font="$(basename "$obj")"
+
+    if [[ "$font" == *."tar" ]]; then
+        font="$(remove_extension "$font")"
     fi
 
-    if [ -e "$FONT_DST_DIR/$(basename "$font")" ]; then
-        log "[fonts] Installed $font"
-        e_success "$(basename "$font") installed"
+    if ! [ -e "$FONT_DST_DIR/$font" ]; then
+        if [[ "$font" == *."tar" ]]; then
+            extract "$obj" "$FONT_DIR/.extract"
+            obj="$FONT_DIR/.extract/$font"
+        fi
+
+        log "[fonts] Installing $font"
+        copy "$obj" "$FONT_DST_DIR/$font"
+    fi
+
+    if [ -e "$FONT_DST_DIR/$font" ]; then
+        log "[fonts] $font installed"
+        e_success "$font installed"
     else
         log "[fonts] Failed to install $font"
-        e_error "$(basename "$font") could not be installed"
+        e_error "$font could not be installed"
     fi
 done
+
+en_arrow 'Refreshing font cache'
+BLA::start_loading_animation "${BLA_classic[@]}"
+sudo_do 'sudo fc-cache -f'
+BLA::stop_loading_animation
+er_success 'Font cache refreshed'
+
+delete "$FONT_DIR/.extract"
