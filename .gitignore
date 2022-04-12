@@ -1,5 +1,6 @@
-*.log
 backup/
-c.sh
+*.zprezto/
+*.extract/
+.zsh_history
 .installed
-misc/fonts/.extract
+*.log

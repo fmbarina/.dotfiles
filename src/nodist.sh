@@ -177,6 +177,24 @@ download() {
 	_download "$1" "$DOWN_DIR"
 }
 
+### git ###
+
+clone() {
+	local repo
+	local dest
+	repo="$1"
+	dest="$2"
+
+	if [ -e "$dest" ]; then
+		log "[clone] $dest already exists"
+		abort "Cloning: directory already exists: $dest"
+	fi
+
+	log "[clone] Cloning $repo to $dest"
+	git clone -q --recursive "$repo" "$dest"
+}
+
+
 ### Desktop enviroment ###
 
 # Thanks to

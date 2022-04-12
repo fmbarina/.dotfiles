@@ -147,8 +147,7 @@ sudo_do() {
 
 	if (( sudof > sudol )); then
 		log "[sudo] There has been a sudo error. ($sudof - $?)"
-		echo "Errors trying to use sudo, check your password. Stopping."
-		abort
+		abort 'Errors trying to use sudo, check your password. Stopping.'
 	fi
 }
 
@@ -166,6 +165,7 @@ abort() {
 	BLA::stop_loading_animation
 	tput cnorm # Show cursor
 	echo >&2 "Something went wrong or user interrupted. Stopping."
+	[ "$1" ] && echo >&2 "$1"
 	exit 1
 }
 
