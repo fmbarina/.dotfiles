@@ -48,9 +48,10 @@ Much of this is post-install stuff, some stuff is distro specific. For example, 
 
 ### Others
 
-- `src/` just contains source files, some for specific distros.
-- `bkp/` - is generated when linking would overwrite anything.
-- `vendor/` - third party stuff
+- `bkp/` - is generated when linking/copying would overwrite anything.
+- `mist/` - misc resources that can be used by dotfiles.
+- `src/` - just contains source files, some for specific distros.
+- `vendor/` - third party stuff.
 
 ## Installation
 
