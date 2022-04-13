@@ -19,6 +19,7 @@ brewpath="/home/linuxbrew/.linuxbrew/bin/brew"
 brew_packages=(
 	navi
 	btop
+	bitwarden-cli
 )
 
 # Functions -------------------------------------------------------------------

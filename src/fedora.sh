@@ -11,6 +11,8 @@ extension="rpm"
 log_dist="fedora" # Unused here, used in nodist.sh
 
 pm_packages=(
+	util-linux           # Linux utilities
+	util-linux-user	     # User utilities
 	python3              # Python3
 	python3-pip          # The python package manager
 	p7zip                # Better than Winrar
@@ -27,6 +29,7 @@ pm_packages=(
 	trash-cli            # Trash cli tool
 	neofetch             # Pretty CLI system information just because
 	vim                  # Enhanced-vim text editor
+	zsh                  # Z shell
 	ShellCheck           # Bash/sh shell script linter
 	gnome-tweaks         # Gnome tweak enhancements
 	code                 # VSCode
