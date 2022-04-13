@@ -48,16 +48,15 @@ backup() {
 		make_dir "$BKP_DIR"
 	elif [ -e "$BKP_DIR/$(basename "$src")" ]; then
 		log "[backup] $src already exists, stopped. Please remove or rename it."
-		echo "$src already backed up, stopped. Please remove or rename it."
-		abort
+		abort "$src already backed up, stopped. Please remove or rename it."
 	fi
 
 	if [ -d "$src" ]; then
 		log "[backup] Backing up directory: $src"
-		copy "$src" "$BKP_DIR"
+		cp -r  "$src" "$BKP_DIR"
 	else
 		log "[backup] Backing up file: $src"
-		copy "$src" "$BKP_DIR"
+		cp -r  "$src" "$BKP_DIR"
 	fi
 }
 
