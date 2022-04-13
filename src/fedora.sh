@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# This file should be sourced unless when running fedora
+
 # If not running fedora, stop
 ! is_fedora && log "[fedora] Incompatible source. Stopping." && abort
 

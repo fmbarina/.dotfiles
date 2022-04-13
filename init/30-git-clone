@@ -17,5 +17,5 @@ fi
 if [ -e "$ZDOTDIR/.zprezto/.git" ]; then
 	er_success 'Cloned Prezto'
 else
-    er_error 'Could not clone Prezto'
+	er_error 'Could not clone Prezto'
 fi

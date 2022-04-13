@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# This file should be sourced unless when running ubuntu
+
 # If not running fedora, stop
 ! is_ubuntu && log "[ubuntu-apt] Incompatible source. Stopping." && abort
 
