@@ -10,7 +10,6 @@ pip_packages=(
 	requests
 	numpy
 	autopep8
-	thefuck
 )
 
 ### homebrew ###

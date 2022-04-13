@@ -6,9 +6,6 @@ alias sharedfh='sudo vmhgfs-fuse .host:/ /mnt/hgfs -o allow_other -o uid=1000'
 alias sshperm='mkdir -p ~/.ssh && cd ~/.ssh && chmod 700 id_rsa'
 alias sshadd='ssh-add ~/.ssh/id_rsa'
 
-# Include thefuck
-eval $(thefuck --alias)
-
 # Include brew
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
