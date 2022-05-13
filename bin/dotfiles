@@ -124,7 +124,7 @@ sudo_req() {
 	fi
 
 	sudo_do "touch /etc" 1> /dev/null
-	echo ''; echo ''
+	echo ''
 }
 
 # This certainly isn't the best (or safest!) way to do this. Works for my case.
@@ -154,7 +154,8 @@ sudo_do() {
 
 prompt_yn() {
 	while true; do
-		read -r -p "$1 [y/n] " yn
+		echo ''
+		read -r -n 1 -p "$1 [y/n] " yn
 		case $yn in
 			[Yy]*) return 0 ;;
 			[Nn]*) return 1 ;;
@@ -182,6 +183,7 @@ prompt_yn 'Upgrade all current installed packages?' && up_pkgs=y || up_pkgs=n
 
 tput civis # Hide cursor
 
+echo ''
 log "[dotfiles] Starting dotfiles..."
 e_header "Starting dotfiles"
 
