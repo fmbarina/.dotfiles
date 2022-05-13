@@ -4,24 +4,20 @@
 
 REPOURL="https://github.com/fmbarina/.dotfiles.git" 
 
-readonly DOTFILES="$HOME/.dotfiles"
-readonly BIN_DIR="$DOTFILES/bin"
-readonly LINK_DIR="$DOTFILES/link"
-readonly COPY_DIR="$DOTFILES/copy"
-readonly INIT_DIR="$DOTFILES/init"
-readonly BKP_DIR="$DOTFILES/backup"
-readonly FONT_DIR="$DOTFILES/misc/fonts"
+DOTFILES="$HOME/.dotfiles"
+BIN_DIR="$DOTFILES/bin"
+LINK_DIR="$DOTFILES/link"
+COPY_DIR="$DOTFILES/copy"
+INIT_DIR="$DOTFILES/init"
+BKP_DIR="$DOTFILES/backup"
+FONT_DIR="$DOTFILES/misc/fonts"
 
-# If $VAR undefined, define it
-[ -z "$DOWN_DIR" ] && readonly DOWN_DIR="$HOME/Downloads/tmpdotfiles"
-[ -z "$LOG_DIR" ] && readonly LOG_DIR="$DOTFILES"
+DOWN_DIR="$HOME/Downloads/tmpdotfiles"
+LOG_DIR="$DOTFILES"
 
-readonly LOG_DOT_FILE="$LOG_DIR/dotfiles.log"
-readonly LOG_SUD_FILE="$LOG_DIR/sudo.log"
-readonly LOG_OTH_FILE="$LOG_DIR/other.log"
+LOG_FILE="$DOTFILES/dotfiles.log"
 
 sudop=              # sudo password
-declare -i sudor=0  # return value for sudo_do
 declare -i sudof=0  # sudo fail counter
 declare -i sudol=1  # sudo failures allowed (will exit if greater than)
 
@@ -68,7 +64,7 @@ log() {
 
 	if [ -d "$LOG_DIR" ]; then
 		if [ -n "$enable_log" ]; then
-			echo -e "[$(date +%H:%M:%S)] - $1" >> "$LOG_DOT_FILE"; 
+			echo -e "[$(date +%H:%M:%S)] - $1" >> "$LOG_FILE"; 
 		fi
 	fi
 }
@@ -132,30 +128,28 @@ sudo_req() {
 sudo_do() {
 	if [ -z "$sudop" ]; then
 		log "[sudo] No sudo password set, skipping: $1"
-		sudor=2
 	else
 		log "[sudo] Executing: $1"
 		
 		if [ -d "$LOG_DIR" ]; then
-			echo "$sudop" | sudo -S >> $LOG_SUD_FILE $1 && sudor=0 && return
+			echo "$sudop" | sudo -S >> $LOG_FILE $1 && return
 		else
-			echo "$sudop" | sudo -S 1> /dev/null $1 && sudor=0 && return
+			echo "$sudop" | sudo -S 1> /dev/null $1 && return
 		fi
 
 		sudof+=1
-		sudor=1
-	fi
 
-	if (( sudof > sudol )); then
-		log "[sudo] There has been a sudo error. ($sudof - $?)"
-		abort 'Errors trying to use sudo, check your password. Stopping.'
+		if (( sudof > sudol )); then
+			log "[sudo] There has been a sudo error. ($sudof - $?)"
+			abort 'Errors trying to use sudo, check your password. Stopping.'
+		fi
 	fi
 }
 
 prompt_yn() {
 	while true; do
 		echo ''
-		read -r -n 1 -p "$1 [y/n] " yn
+		read -n 1 -r -s -p "$1 [y/n] " yn
 		case $yn in
 			[Yy]*) return 0 ;;
 			[Nn]*) return 1 ;;
@@ -242,10 +236,6 @@ fi
 
 # shellcheck source=../vendor/bash_animations/bash_loading_animations.sh
 source "$DOTFILES/vendor/bash_animations/bash_loading_animations.sh"
-
-# I wanted to use submodules to load vendor/bash, but that would mean only
-# being able to use it after the submodule has been cloned. Well, that was a
-# waste of time. Thank you so much for the very open license.
 
 # Run -------------------------------------------------------------------------
 

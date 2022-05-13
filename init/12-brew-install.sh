@@ -8,9 +8,9 @@
 brewpath="/home/linuxbrew/.linuxbrew/bin/brew"
 
 brew_packages=(
-	navi
-	btop
-	bitwarden-cli
+	navi           # Cheat sheets
+	btop           # Pretty resource monitor
+	bitwarden-cli  # Bitwarden cli? Self descriptive
 )
 
 # Functions -------------------------------------------------------------------
@@ -35,7 +35,7 @@ install_brew() {
 	script="$(wget -qO- $script)"
 
 	_install_brew
-	/bin/bash -c "NONINTERACTIVE=1 $script" 1>>"$LOG_OTH_FILE" 2>&1
+	/bin/bash -c "NONINTERACTIVE=1 $script" 1>>"$LOG_FILE" 2>&1
 
 	if is_there_brew; then
 		log "[brew] Homebrew installed"
@@ -53,7 +53,7 @@ uninstall_brew() {
 	local script
 	script="https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh"
 	script=$(wget -qO- $script)
-	echo "$sudop" | /bin/bash -c "$script" -- -f 1>>"$LOG_OTH_FILE" 2>&1
+	echo "$sudop" | /bin/bash -c "$script" -- -f 1>>"$LOG_FILE" 2>&1
 	delete "/home/linuxbrew"
 }
 
@@ -71,17 +71,17 @@ brew_is_installed() {
 
 brew_update() {
 	log "[brew] Updating brew (all)"
-	brew update 1>>"$LOG_OTH_FILE" 2>&1
+	brew update 1>>"$LOG_FILE" 2>&1
 }
 
 brew_upgrade() {
 	log "[brew] Upgrading brew (all)"
-	brew upgrade 1>>"$LOG_OTH_FILE" 2>&1
+	brew upgrade 1>>"$LOG_FILE" 2>&1
 }
 
 brew_install() {
 	log "[brew] Installing formula $1"
-	brew install "$1" 1>>"$LOG_OTH_FILE" 2>&1
+	brew install "$1" 1>>"$LOG_FILE" 2>&1
 
 	if brew_is_installed "$1"; then
 		log "[brew] Installed formula $1"
@@ -115,11 +115,11 @@ fi
 if is_there_brew; then
 	er_success "Homebrew installed"
 else
+	# If brew is not installed, skip the rest of the file
 	er_error "Failed to install Homebrew."
+	log "[brew-install] brew not installed. Skipping."
+	return
 fi
-
-# If brew is not installed, skip the rest of the file
-! is_there_brew && log "[brew-install] brew not installed. Skipping." && return
 
 en_arrow "Updating brew and formulae "
 BLA::start_loading_animation "${BLA_classic[@]}"

@@ -223,7 +223,7 @@ gh_is_installed() {
 # }
 
 # rust_install() {
-# 	url https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path >> "$LOG_OTH_FILE"
+# 	url https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path >> "$LOG_FILE"
 # }
 
 ### Distro-specific functions ###
