@@ -17,6 +17,7 @@ pm_packages=(
 	python3-pip          # The python package manager
 	p7zip                # Better than Winrar
 	p7zip-plugins        # ~plugins
+	bash                 # Yes this is redundant
 	htop                 # Cli process monitor
 	tmux                 # Terminal multiplexer
 	wget                 # File retriever package
@@ -28,11 +29,13 @@ pm_packages=(
 	ncdu                 # Directory listing CLI tool
 	trash-cli            # Trash cli tool
 	neofetch             # Pretty CLI system information just because
-	vim                  # Enhanced-vim text editor
+	neovim               # Vim-based text editor
+	python3-neovim       # python support
 	zsh                  # Z shell
-	ShellCheck           # Bash/sh shell script linter
-	gnome-tweaks         # Gnome tweak enhancements
 	code                 # VSCode
+	ShellCheck           # Bash/sh shell script linter
+	valgrind             # Memory utility
+	gnome-tweaks         # Gnome tweak enhancements
 )
 
 # Array of key&value pairs as (keyname)&(username/repo)
