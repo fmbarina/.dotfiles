@@ -108,15 +108,16 @@ is_known_distro() {
 sudo_req() {
 	e_header "Regarding dotfiles and sudo"
 	echo "This script will install many things and, as such, it will require"
-	echo "sudo. If you don't want to or can't provide your sudo password, you"
-	echo "may skip it. But I don't even know if it works without it."
+	echo "super user privileges. If you don't want to or can't provide those,"
+	echo "the script ends here for now."
 
 	if [ -z "$sudop" ]; then
 		echo ''
-		read -s -r -p "Type sudo password, or skip by pressing enter: " sudop
+		read -s -r -p "Type sudo password or stop by pressing enter: " sudop
 		echo ''
 		if [ -z "$sudop" ]; then
-			echo "Anything that requires sudo will be skipped."
+			echo "No password provided. Stopping."
+			exit 1
 		else
 			echo "Password will be passed automatically in the future."
 		fi  
@@ -295,6 +296,4 @@ e_header "Dotfiles up to date! (hopefully)"; echo ''
 
 tput cnorm # Show cursor
 
-if [ -n "$req_reboots" ] ; then
-	prompt_yn 'Reboot?' && sudo_do 'reboot' || exit 0
-fi
+prompt_yn 'Reboot?' && sudo_do 'reboot' || exit 0

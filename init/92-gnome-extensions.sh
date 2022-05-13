@@ -24,6 +24,8 @@ gnome_extensions=(
 
 gnome_install_ext() {
     # TODO: if on wayland, maybe don't try restarting, as it will fail
+    # for now, we'll just use this: 
+    req_reboot=yes
     gext "$1" --yes --restart-shell 1> /dev/null
 }
 
