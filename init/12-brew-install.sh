@@ -8,6 +8,7 @@
 brewpath="/home/linuxbrew/.linuxbrew/bin/brew"
 
 brew_packages=(
+	fzf            # Fuzzy finder
 	navi           # Cheat sheets
 	btop           # Pretty resource monitor
 	bitwarden-cli  # Bitwarden cli? Self descriptive

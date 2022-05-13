@@ -3,18 +3,28 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# User specific environment
-export PATH="$HOME/.local/bin:$HOME/bin:$HOME/.dotfiles/bin:$PATH"
-export DOTFILES="$HOME/.dotfiles"
-
-# Source Prezto.
+# Source Prezto
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Source common aliases
+# User specific environment
+if [ -f "$HOME/.user_env" ]; then
+	source "$HOME/.user_env"
+fi
+
+# Common aliases
 if [ -f "$HOME/.aliases" ]; then
   source "$HOME/.aliases"
+fi
+
+# Setup fzf, from .fzf.zsh
+if [[ ! "$PATH" == */home/linuxbrew/.linuxbrew/opt/fzf/bin* ]]; then
+  export PATH="${PATH:+${PATH}:}/home/linuxbrew/.linuxbrew/opt/fzf/bin"
+fi
+# Source shorcuts
+if [ -f "/home/linuxbrew/.linuxbrew/opt/fzf/shell/key-bindings.zsh" ]; then
+  source "/home/linuxbrew/.linuxbrew/opt/fzf/shell/key-bindings.zsh"
 fi
 
 # Include brew
