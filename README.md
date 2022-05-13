@@ -6,9 +6,9 @@ These are my Fedora / Ubuntu [dotfiles](https://dotfiles.github.io), with built-
 
 Dotfiles are an extremely useful way to quickly bootstrap a new system, as with a single command it's possible to automate the proccess of getting your system just the way you like it.
 
-I like gaming, specially gaming to relax. I also like learning more about linux. So, I decided to stay in Windows and use linux VMs. As a bonus, whenever something goes wrong, I can just nuke the entire thing and start over. That's not to say I won't fix my mistakes, I just don't wanna deal with the aftermath of trying out `rm -rf /` for fun (don't do it).
+I like gaming, specially gaming to relax. I also like learning more about linux. Considering the effort required to game on linux, I decided to stay in Windows and use linux VMs. As a bonus, whenever something goes wrong, I can just nuke the entire thing and start over. That's not to say I won't fix my mistakes, I just don't wanna deal with the aftermath of trying out `rm -rf /` for fun (don't do it).
 
-Why is this relevant? Because I'm telling you, right now, this was made partially as a learning project and oriented towards quickly setting up new systems suited for a specific use-case. 
+Why is this relevant? Because it tells you that this was made partially as a learning project and oriented towards quickly setting up new systems suited for a specific use-case. 
 
 With that out of the way, `bin/dotfiles` is the "dotfiles" command that makes things happen.
 
@@ -48,7 +48,7 @@ Much of this is post-install stuff, some stuff is distro specific. For example, 
 
 ### Others
 
-- `bkp/` - is generated when linking/copying would overwrite anything.
+- `backup/` - is generated when linking/copying would overwrite anything.
 - `misc/` - misc resources that can be used by dotfiles.
 - `src/` - just contains source files, some for specific distros.
 - `vendor/` - third party stuff.
@@ -77,7 +77,7 @@ bash -c "$(wget -qO- https://raw.githubusercontent.com/fmbarina/.dotfiles/master
 
 Heavily inspired by this guy's [very cool dotfiles](https://github.com/cowboy/dotfiles), thanks cowboy. In fact, it might've easier to just use his, but I don't learn as well without doing things myself.
 
-I'd also like to thank the [dotfiles community](https://dotfiles.github.io) for all the amazing dotfiles and guides out there.
+I'd also like to thank the [dotfiles community](https://dotfiles.github.io) all around for all the amazing dotfiles and guides out there.
 
 ## License
 
