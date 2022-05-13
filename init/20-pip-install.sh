@@ -4,6 +4,39 @@
 ! (pm_is_installed python3-pip) \
 	&& log "[pip] Pip not installed. Skipping." && return
 
+# Var -------------------------------------------------------------------------
+
+pip_packages=(
+	requests
+	numpy
+	autopep8
+)
+
+# Functions -------------------------------------------------------------------
+
+pip_is_installed() {
+	local found
+	log "[pip] Checking if pip package installed: $1"
+	found=$( pip list | grep -E "^$1" )
+
+	if [[ $found ]]; then
+		log "[pip] $pkg installed" ; return 0
+	else
+		log "[pip] Could not find $1" ; return 1
+	fi
+}
+
+pip_install() {
+	log "[pip] Installing $1"
+	pip install "$1" --quiet
+
+	if pip_is_installed "$1"; then
+		log "[pip] Installed $1"
+	else
+		log "[pip] Failed to install $1"
+	fi
+}
+
 # Run -------------------------------------------------------------------------
 
 # TODO: pip upgrade all?
