@@ -1,0 +1,3 @@
+#!/bin/bash
+
+bash "$DOTFILES/vendor/gnome-shell-extension-installer/gnome-shell-extension-installer" "$@"

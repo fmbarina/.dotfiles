@@ -13,6 +13,10 @@ log_dist="fedora" # Unused here, used in nodist.sh
 pm_packages=(
 	util-linux           # Linux utilities
 	util-linux-user	     # User utilities
+	dbus                 # Application messaging system
+	unzip				 # Unzip utility
+	jq					 # JSON processor
+	perl                 # Perl
 	python3              # Python3
 	python3-pip          # The python package manager
 	p7zip                # Better than Winrar

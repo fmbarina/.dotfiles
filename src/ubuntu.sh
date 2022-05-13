@@ -12,6 +12,10 @@ log_dist="ubuntu" # Unused here, used in nodist.sh
 
 pm_packages=(
 	util-linux           # Linux utilities
+	dbus                 # Application messaging system
+	unzip				 # Unzip utility
+	jq					 # JSON processor
+	perl                 # Perl
 	python3              # Python3
 	python3-pip          # The python package manager
 	python-is-python3    # python to python3 symlink

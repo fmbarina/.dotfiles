@@ -5,6 +5,7 @@ fi
 
 # User specific environment
 export PATH="$HOME/.local/bin:$HOME/bin:$HOME/.dotfiles/bin:$PATH"
+export DOTFILES="$HOME/.dotfiles"
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then

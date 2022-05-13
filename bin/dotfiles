@@ -294,3 +294,7 @@ log "[dotfiles] Dotfiles up to date! (hopefully)"
 e_header "Dotfiles up to date! (hopefully)"; echo ''
 
 tput cnorm # Show cursor
+
+if [ -n "$req_reboots" ] ; then
+	prompt_yn 'Reboot?' && sudo_do 'reboot' || exit 0
+fi
