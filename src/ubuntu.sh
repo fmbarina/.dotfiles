@@ -11,8 +11,10 @@ extension="deb"
 log_dist="ubuntu" # Unused here, used in nodist.sh
 
 pm_packages=(
+	util-linux           # Linux utilities
 	python3              # Python3
 	python3-pip          # The python package manager
+	python-is-python3    # python to python3 symlink
 	p7zip-full           # Better than Winrar
 	p7zip-rar            # Better than Winrar
 	bash                 # Yes this is redundant
@@ -27,11 +29,13 @@ pm_packages=(
 	ncdu                 # Directory listing CLI tool
 	trash-cli            # Trash cli tool
 	neofetch             # Pretty CLI system information just because
-	vim                  # Enhanced-vim text editor
+	neovim               # Vim-based text editor
+	python3-neovim       # python support
+	zsh                  # Z shell
 	code                 # vscode 
 	shellcheck           # Bash/sh shell script linter
+	valgrind             # Memory utility
 	gnome-tweaks         # Gnome tweak enhancements
-	python-is-python3    # python to python3 symlink
 )
 
 # Array of key&value pairs as (keyname)&(username/repo)
