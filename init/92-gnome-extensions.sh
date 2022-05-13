@@ -14,10 +14,11 @@ gnome_extensions=(
     3088 # https://extensions.gnome.org/extension/3088/extension-list/
     3193 # https://extensions.gnome.org/extension/3193/blur-my-shell/
     4839 # https://extensions.gnome.org/extension/4839/clipboard-history/
-    # Choose one of these
-    # TODO: https://extensions.gnome.org/extension/4013/spotify-controller/
-    # https://extensions.gnome.org/extension/4472/spotify-tray/
 )
+
+# TODO: Choose one of these
+# https://extensions.gnome.org/extension/4013/spotify-controller/
+# https://extensions.gnome.org/extension/4472/spotify-tray/
 
 # Functions -------------------------------------------------------------------
 
