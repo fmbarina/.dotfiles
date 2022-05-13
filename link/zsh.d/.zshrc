@@ -11,6 +11,11 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+# Source common aliases
+if [ -f "$HOME/.aliases" ]; then
+  source "$HOME/.aliases"
+fi
+
 # Include brew
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
