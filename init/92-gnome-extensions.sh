@@ -6,14 +6,13 @@
 
 # Var -------------------------------------------------------------------------
 
-# TODO: numbers aren't very useful. An array could help here
 gnome_extensions=(
-    906  # https://extensions.gnome.org/extension/906/sound-output-device-chooser/
-    1460 # https://extensions.gnome.org/extension/1460/vitals/
-    #  Or, https://extensions.gnome.org/extension/2986/runcat/
-    3088 # https://extensions.gnome.org/extension/3088/extension-list/
-    3193 # https://extensions.gnome.org/extension/3193/blur-my-shell/
-    4839 # https://extensions.gnome.org/extension/4839/clipboard-history/
+    'https://extensions.gnome.org/extension/906/sound-output-device-chooser/'
+    'https://extensions.gnome.org/extension/1460/vitals/'
+    'https://extensions.gnome.org/extension/2986/runcat/'
+    'https://extensions.gnome.org/extension/3088/extension-list/'
+    'https://extensions.gnome.org/extension/3193/blur-my-shell/'
+    'https://extensions.gnome.org/extension/4839/clipboard-history/'
 )
 
 # TODO: Choose one of these
@@ -22,18 +21,29 @@ gnome_extensions=(
 
 # Functions -------------------------------------------------------------------
 
+gnome_id_from_link() {
+    echo "$1" | awk -F'/' '{print $5}'
+}
+
+gnome_name_from_link() {
+    echo "$1" | awk -F'/' '{print $6}'
+}
+
 gnome_install_ext() {
     # TODO: if on wayland, maybe don't try restarting, as it will fail
-    # for now, we'll just use this: 
-    req_reboot=yes
     gext "$1" --yes --restart-shell 1> /dev/null
 }
 
 # Run -------------------------------------------------------------------------
 
 for ext in "${gnome_extensions[@]}"; do
-	en_arrow "Checking $ext "
-	gnome_install_ext "$ext"
-    er_success "$ext installed"
+    gextname=$(gnome_name_from_link "$ext")
+	gextid=$(gnome_id_from_link "$ext")
+
+    log "[gnome-extensions] Installing $gextid: $gextname"
+
+    en_arrow "Checking $gextname"
+	gnome_install_ext "$gextid"
+    er_success "$gextname installed"
 done
 
