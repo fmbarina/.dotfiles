@@ -24,7 +24,7 @@ declare -i sudol=1  # sudo failures allowed (will exit if greater than)
 # TODO: Might wanna learn how to use actual custom args
 enable_log=yes # ha ha yes to be fixed later
 
-[ -e "$DOTFILES/.installed" ] && INSTALLED=yes || INSTALLED=no
+[ -e "$DOTFILES/.installed" ] && INSTALLED=yes
 
 # Functions -------------------------------------------------------------------
 
@@ -119,7 +119,7 @@ sudo_req() {
 		fi  
 	fi
 
-	sudo_do "touch /etc" 1> /dev/null
+	sudo_do "touch /etc" 1> /dev/null 2>&1
 	echo ''
 }
 
@@ -280,12 +280,15 @@ fi
 # Cleanup
 delete "$DOWN_DIR"
 
-# Mark dotfiles run
+# Mark dotfiles as run
 touch "$DOTFILES/.installed"
 
 log "[dotfiles] Dotfiles up to date! (hopefully)"
-e_header "Dotfiles up to date! (hopefully)"; echo ''
+e_header "Dotfiles up to date! (hopefully)"; 
 
 tput cnorm # Show cursor
 
-prompt_yn 'Reboot?' && sudo_do 'reboot' || exit 0
+prompt_yn 'Reboot?' && sudo_do 'reboot'; echo ''
+
+[ -n "$dotbkp" ] && echo "Check backed up file(s) in $DOTFILES/backup"
+echo 'You may need to restart your shell for changes to take effect.'

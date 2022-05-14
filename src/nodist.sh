@@ -41,6 +41,8 @@ backup() {
 		log "[backup] Backing up file: $src"
 		cp -r  "$src" "$BKP_DIR"
 	fi
+
+	[ -z $dotbkp ] && dotbkp=yes
 }
 
 rsymlink() {
@@ -99,7 +101,7 @@ copy() {
 	dest="$2"
 
 	if [ -e "$dest" ]; then
-		if [ "$INSTALLED" == 'yes' ]; then
+		if [ -n "$INSTALLED" ]; then
 			log "[copy] Already copied $dest" && return
 		fi
 		
