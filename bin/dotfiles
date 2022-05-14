@@ -173,7 +173,7 @@ trap abort SIGINT SIGTERM
 # Ask user input at the beginning, nobody wants to babysit a script
 sudo_req
 
-prompt_yn 'Upgrade all current installed packages?' && up_pkgs=y || up_pkgs=n
+prompt_yn 'Upgrade all current installed packages?' && up_pkgs=yes
 
 tput civis # Hide cursor
 

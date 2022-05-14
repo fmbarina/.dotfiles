@@ -20,14 +20,14 @@ pm_update
 BLA::stop_loading_animation
 
 # Upgrade everything with package manager
-if [ "$up_pkgs" == 'y' ] ; then
+if [ -n "$up_pkgs" ] ; then
 	ern_arrow "Upgrading packages "
 	BLA::start_loading_animation "${BLA_classic[@]}"
 	pm_upgrade
 	BLA::stop_loading_animation	
 fi
 
-if [ "$up_pkgs" == 'y' ] ; then
+if [ -n "$up_pkgs" ] ; then
 	er_success "Packages up to date" # TODO: what if they aren't though ha ha fix
 else
 	er_success "Package info updated"

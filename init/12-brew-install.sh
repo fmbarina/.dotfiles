@@ -127,14 +127,14 @@ BLA::start_loading_animation "${BLA_classic[@]}"
 brew_update
 BLA::stop_loading_animation
 
-if [ "$up_pkgs" == 'y' ] ; then
+if [ -n "$up_pkgs" ] ; then
 	ern_arrow "Upgrading casks and formulae "
 	BLA::start_loading_animation "${BLA_classic[@]}"
 	brew_upgrade
 	BLA::stop_loading_animation	
 fi
 
-if [ "$up_pkgs" == 'y' ] ; then
+if [ -n "$up_pkgs" ] ; then
 	er_success "Brew up to date" # TODO: what if not though ha ha fix
 else
 	er_success "Brew info updated"
