@@ -75,7 +75,7 @@ BLA::stop_loading_animation() {
   # This code has been altered
   kill "${BLA_loading_animation_pid}" &> /dev/null
   echo -ne "\0338\033[K" # Clear the leftover animation character
-  tput cnorm # Restore the terminal cursor
+  # tput cnorm # Restore the terminal cursor
 }
 
 
