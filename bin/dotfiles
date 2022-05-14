@@ -246,22 +246,26 @@ fi
 er_success "/bin in PATH"
 
 # Symlink everything in the link directory
-if [ "$(ls "$LINK_DIR")" ]; then
+shopt -s dotglob
+if [ "$(ls -A "$LINK_DIR")" ]; then
 	e_header "Symlinking"
 	for target in "$LINK_DIR"/*; do
-		symlink "$HOME/.$(basename "$target")" "$target"
+		symlink "$HOME/$(basename "$target")" "$target"
 		e_success "Symlinked $(basename "$target")"
 	done
 fi
+shopt -u dotglob
 
 # Copy everything in the copy directory
-if [ "$(ls "$COPY_DIR")" ]; then
+shopt -s dotglob
+if [ "$(ls -A "$COPY_DIR")" ]; then
 	e_header "Copying"
 	for item in "$COPY_DIR"/*; do
-		copy "$item" "$HOME/.$(basename "$item")"
+		copy "$item" "$HOME/$(basename "$item")"
 		e_success "Copied $(basename "$item")"
 	done
 fi
+shopt -u dotglob
 
 # Run init scripts
 if [ "$(ls "$INIT_DIR")" ]; then

@@ -86,7 +86,7 @@ symlink() {
 	fi
 	
 	if ! [ -e "$link" ]; then
-		log "[link] Creating symlink: $link"
+		log "[link] Creating symlink: $link To: $tgt"
 		ln -s "$tgt" "$link" # this command confuses me greatly!
 	else
 		log "[link] Could not create symlink: $link"

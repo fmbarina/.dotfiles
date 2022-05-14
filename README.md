@@ -32,15 +32,11 @@ It's added to PATH, there really isn't much to it. These may be used by dotfiles
 
 ### About `link`
 
-Stuff inside link/ is symlinked to ~/ with an added '.' at the front.
-
-Anything that would be overwritten is copied to `backup/`. If a symlink is detected and already points to the correct file, nothing changes.
+Stuff inside link/ is symlinked to ~/. Anything that would be overwritten is copied to `backup/`. If a symlink is detected and already points to the correct file, nothing changes.
 
 ### About `copy`
 
-Stuff inside copy/ is copied to ~/ with an added '.' at the front.
-
-Anything that would be overwritten is copied to `backup/`. Currently, no files are overwritten if a .installed file is detected inside dotfiles. If this file is removed, dotfiles will assume it has to copy the files regardless.
+Stuff inside copy/ is copied to ~/. Anything that would be overwritten is copied to `backup/`. Currently, no files are overwritten if a .installed file is detected inside dotfiles. If this file is removed, dotfiles will assume it has to copy the files regardless.
 
 ### About `init`
 
