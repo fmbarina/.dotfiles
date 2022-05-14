@@ -292,7 +292,12 @@ e_header "Dotfiles up to date! (hopefully)";
 
 tput cnorm # Show cursor
 
-prompt_yn 'Reboot?' && sudo_do 'reboot'; echo ''
+prompt_yn 'Reboot?' && sudo_do 'reboot'; echo ''; echo ''
 
 [ -n "$dotbkp" ] && echo "Check backed up file(s) in $DOTFILES/backup"
-echo 'You may need to restart your shell for changes to take effect.'
+
+if [ -z "$INSTALLED" ]; then
+	echo ''
+	echo 'Since this is your first time running dotfiles...'
+	e_arrow 'You may need to restart your shell for changes to take effect.'
+fi

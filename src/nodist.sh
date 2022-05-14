@@ -169,8 +169,7 @@ clone() {
 	dest="$2"
 
 	if [ -e "$dest" ]; then
-		log "[clone] $dest already exists"
-		abort "Cloning: directory already exists: $dest"
+		log "[clone] $dest already exists. Attempting to clone anyway."
 	fi
 
 	log "[clone] Cloning $repo to $dest"

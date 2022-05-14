@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# This script's format is a little different since repositories may need to be
+# clone to different locations, and I didn't see an easy&simple way to do that
+
 # Var -------------------------------------------------------------------------
 
 [ -n "$ZDOTDIR" ] || ZDOTDIR="$HOME/.zsh.d"
