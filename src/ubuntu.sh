@@ -11,6 +11,7 @@ extension="deb"
 log_dist="ubuntu" # Unused here, used in nodist.sh
 
 pm_packages=(
+	build-essential      # Big depencies. Some are repeated below
 	util-linux           # Linux utilities
 	dbus                 # Application messaging system
 	unzip				 # Unzip utility

@@ -11,6 +11,8 @@ extension="rpm"
 log_dist="fedora" # Unused here, used in nodist.sh
 
 pm_packages=(
+	@development-tools   # Big depencies. Some are repeated below
+	#libstdc++-static	 # TODO: wait, is this in @dev?
 	util-linux           # Linux utilities
 	util-linux-user	     # User utilities
 	dbus                 # Application messaging system
