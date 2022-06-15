@@ -19,7 +19,7 @@ brew_packages=(
 is_there_brew() {
 	# This fails if Homebrew is installed at a different location, nevermind 
 	# trying to run this on a mac. Since this issue does not concern my case, 
-	# I'm won't bother fixing it. A warning, in case you plan on using this.
+	# I won't bother fixing it. A warning, in case you plan on using this.
 	log "[brew] Checking if brew package installed"
 	if [ -e "$brewpath" ]; then
 		log "[brew] brew installed" ; return 0
