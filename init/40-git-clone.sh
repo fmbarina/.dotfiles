@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 # This script's format is a little different since repositories may need to be
-# clone to different locations, and I didn't see an easy&simple way to do that
+# clone to different locations. I didn't see an easy&simple way to handle that,
+# and honestly, right now ti doesn't matter.
 
 # Var -------------------------------------------------------------------------
 
