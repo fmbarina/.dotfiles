@@ -11,7 +11,8 @@ extension="rpm"
 log_dist="fedora" # Unused here, used in nodist.sh
 
 pm_packages=(
-	@development-tools   # Big depencies. Some are repeated below
+	@development-tools   # Big depencies. Some are repeated below.
+	# TODO: Says it couldn't be installed because I'm checking in a dumb way
 	#libstdc++-static	 # TODO: wait, is this in @dev?
 	util-linux           # Linux utilities
 	util-linux-user	     # User utilities
@@ -28,6 +29,7 @@ pm_packages=(
 	tmux                 # Terminal multiplexer
 	wget                 # File retriever package
 	curl                 # Data transfer tool
+	fzf                  # Fuzzy finder
 	fd-find              # Find files
 	ripgrep              # Regex search
 	exa                  # ls alternative

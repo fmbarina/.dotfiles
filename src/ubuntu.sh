@@ -27,6 +27,7 @@ pm_packages=(
 	tmux                 # Terminal multiplexer
 	wget                 # File retriever package
 	curl                 # Data transfer tool
+	fzf                  # Fuzzy finder
 	fd-find              # Find files
 	ripgrep              # Regex search
 	exa                  # ls alternative

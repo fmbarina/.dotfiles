@@ -8,10 +8,10 @@
 brewpath="/home/linuxbrew/.linuxbrew/bin/brew"
 
 brew_packages=(
-	fzf            # Fuzzy finder
+	#fzf           # get it from native package manager
 	navi           # Cheat sheets
 	btop           # Pretty resource monitor
-	bitwarden-cli  # Bitwarden cli? Self descriptive
+	#bitwarden-cli # could get it elsewhere (ex: npm)
 )
 
 # Functions -------------------------------------------------------------------
@@ -19,7 +19,7 @@ brew_packages=(
 is_there_brew() {
 	# This fails if Homebrew is installed at a different location, nevermind 
 	# trying to run this on a mac. Since this issue does not concern my case, 
-	# I won't bother fixing it. A warning, in case you plan on using this.
+	# I'm won't bother fixing it. A warning, in case you plan on using this.
 	log "[brew] Checking if brew package installed"
 	if [ -e "$brewpath" ]; then
 		log "[brew] brew installed" ; return 0
@@ -48,7 +48,7 @@ install_brew() {
 	eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 }
 
-# TODO: This is unused at the moment, no plans to use it yet.
+# This is unused at the moment, no plans to use it yet.
 uninstall_brew() {
 	log "[brew] Unistalling brew"
 	local script
@@ -135,7 +135,7 @@ if [ -n "$up_pkgs" ] ; then
 fi
 
 if [ -n "$up_pkgs" ] ; then
-	er_success "Brew up to date" # TODO: what if not though ha ha fix
+	er_success "Brew up to date" # What if not though! #wontfix
 else
 	er_success "Brew info updated"
 fi
