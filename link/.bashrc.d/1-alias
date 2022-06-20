@@ -4,9 +4,3 @@
 if [ -f "$HOME/.aliases" ]; then
   source "$HOME/.aliases"
 fi
-
-# Include brew
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-# Include navi widget
-eval "$(navi widget bash)"

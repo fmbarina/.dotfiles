@@ -27,11 +27,5 @@ if [ -f "/home/linuxbrew/.linuxbrew/opt/fzf/shell/key-bindings.zsh" ]; then
   source "/home/linuxbrew/.linuxbrew/opt/fzf/shell/key-bindings.zsh"
 fi
 
-# Include brew
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-# Include navi
-eval "$(navi widget zsh)"
-
 # To customize prompt, run `p10k configure` or edit ~/.zsh.d/.p10k.zsh.
 [[ ! -f ~/.zsh.d/.p10k.zsh ]] || source ~/.zsh.d/.p10k.zsh
