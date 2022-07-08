@@ -59,23 +59,13 @@ e_erase_cur() { echo -en "\033[2K\r"; } # Erase current line
 
 log() {
 	if [ "$LOG_DIR" != "$DOTFILES" ]; then
-		make_dir "$LOG_DIR"
+		mkdir -p "$LOG_DIR"
 	fi
 
 	if [ -d "$LOG_DIR" ]; then
 		if [ -n "$enable_log" ]; then
 			echo -e "[$(date +%H:%M:%S)] - $1" >> "$LOG_FILE"; 
 		fi
-	fi
-}
-
-make_dir() {
-	# I want to know if the directory already existed before
-	if [ -d "$1" ]; then
-		log "[make_dir] Directory $1 already exists"
-	else
-		log "[make_dir] Creating directory $1"
-		mkdir -p "$1"
 	fi
 }
 
@@ -181,7 +171,7 @@ echo ''
 log "[dotfiles] Starting dotfiles..."
 e_header "Starting dotfiles"
 
-make_dir "$DOWN_DIR"
+mkdir -p "$DOWN_DIR"
 
 # Make sure we have git
 if ! [ -x "$(command -v git)" ]; then
@@ -245,7 +235,7 @@ if ! [[ ":$PATH:" == *":$BIN_DIR:"* ]]; then
 fi
 er_success "/bin in PATH"
 
-# Symlink everything in the link directory
+# Symlink everything in the link directory to home
 shopt -s dotglob
 if [ "$(ls -A "$LINK_DIR")" ]; then
 	e_header "Symlinking"
@@ -256,7 +246,7 @@ if [ "$(ls -A "$LINK_DIR")" ]; then
 fi
 shopt -u dotglob
 
-# Copy everything in the copy directory
+# Copy everything in the copy directory to home
 shopt -s dotglob
 if [ "$(ls -A "$COPY_DIR")" ]; then
 	e_header "Copying"
@@ -299,5 +289,7 @@ prompt_yn 'Reboot?' && sudo_do 'reboot'; echo ''; echo ''
 if [ -z "$INSTALLED" ]; then
 	echo ''
 	echo 'Since this is your first time running dotfiles...'
+	e_arrow 'A ".installed" file has been created. To run dotfiles again \
+			 as if for the first time, please remove it.'
 	e_arrow 'You may need to restart your shell for changes to take effect.'
 fi

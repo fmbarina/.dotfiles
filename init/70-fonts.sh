@@ -14,8 +14,8 @@ FONT_DST_DIR="$HOME/.local/share/fonts"
 
 e_header "Installing fonts"
 
-make_dir "$FONT_DST_DIR"
-make_dir "$FONT_DIR/.extract"
+mkdir -p "$FONT_DST_DIR"
+mkdir -p "$FONT_DIR/.extract"
 
 for obj in "$FONT_DIR"/*; do
 	font="$(basename "$obj")"

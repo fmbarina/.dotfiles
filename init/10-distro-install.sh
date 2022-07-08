@@ -7,7 +7,7 @@
 
 # Add vscode source
 if ! pm_is_installed 'code'; then
-	vscode_add # VSCode is special because it has to be added first
+	vscode_add # VSCode is special because it has to be added before intalling
 	# TODO: OBS: there may be other such packages in the future, (ex: older php 
 	# versions) so it's worth considering setting up proper functions to do so 
 	# or similar and refactoring vscode_add() to use them.
