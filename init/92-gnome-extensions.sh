@@ -17,7 +17,7 @@ gnome_extensions=(
     'https://extensions.gnome.org/extension/3843/just-perfection/'
 )
 
-# TODO: Choose one of these
+# TODO: Choose one of these - actually, ideally, drop spotify
 # https://extensions.gnome.org/extension/4013/spotify-controller/
 # https://extensions.gnome.org/extension/4472/spotify-tray/
 
