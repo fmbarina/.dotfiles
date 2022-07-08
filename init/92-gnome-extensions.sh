@@ -13,6 +13,8 @@ gnome_extensions=(
     'https://extensions.gnome.org/extension/3088/extension-list/'
     'https://extensions.gnome.org/extension/3193/blur-my-shell/'
     'https://extensions.gnome.org/extension/4839/clipboard-history/'
+    'https://extensions.gnome.org/extension/4648/desktop-cube/'
+    'https://extensions.gnome.org/extension/3843/just-perfection/'
 )
 
 # TODO: Choose one of these
