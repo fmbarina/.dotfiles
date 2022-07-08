@@ -24,14 +24,14 @@ backup() {
 	
 	if ! [ -e "$src" ]; then
 		log "[backup] Can not backup nonexistent target: $src"
-		abort
+		abort "Could not backup nonexistent target: $src"
 	fi
 
 	if ! [ -e "$BKP_DIR" ]; then
 		make_dir "$BKP_DIR"
 	elif [ -e "$BKP_DIR/$(basename "$src")" ]; then
 		log "[backup] $src already exists, stopped. Please remove or rename it."
-		abort "$src already backed up, stopped. Please remove or rename it."
+		abort "$src was already backed up, stopped. Please remove or rename it."
 	fi
 
 	if [ -d "$src" ]; then
@@ -81,7 +81,6 @@ symlink() {
 		fi
 
 		backup "$link"
-		log "[link] Removing old file: $link"
 		delete "$link"
 	fi
 	
@@ -89,7 +88,7 @@ symlink() {
 		log "[link] Creating symlink: $link To: $tgt"
 		ln -s "$tgt" "$link" # this command confuses me greatly!
 	else
-		log "[link] Could not create symlink: $link"
+		log "[link] Could not link $link to $tgt"
 	fi
 }
 
@@ -100,23 +99,30 @@ copy() {
 	src="$1"
 	dest="$2"
 
-	if [ -e "$dest" ]; then
+	# If it's a directory, recursively copy its contents
+	if [ -d "$src" ]; then
+		make_dir "$dest"
+		log "[copy] Copying contents of $src To: $dest"
+		for item in "$src"/*; do
+			copy "$item" "$dest/$(basename "$item")"
+		done
+	# If it's a file, we want the file in the right place
+	elif [ -f "$dest" ]; then
 		if [ -n "$INSTALLED" ]; then
-			log "[copy] Already copied $dest" && return
+			log "[copy] File already copied: $dest"
+		elif cmp  >/dev/null 2>&1 ; then
+			log "[copy] Identical file already in place: $dest"
+		else
+			backup "$dest"
+			delete "$dest"
 		fi
-		
-		log "[copy] File already exists: $dest"
-		backup "$dest"
-		log "[copy] Removing old file: $dest"
-		delete "$dest"
 	fi
-	
+
 	if ! [ -e "$dest" ]; then
 		log "[copy] Copying: $src To: $dest"
-		cp -r "$src" "$dest"
-	else
-		log "[copy] Could not copy $link"
+		cp >> "$LOG_FILE" -rpuv "$src" "$dest"
 	fi
+
 }
 
 extract() {
