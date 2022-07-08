@@ -1,1 +1,0 @@
-/home/pinguino/.dotfiles/link/.vim
