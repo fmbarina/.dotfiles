@@ -13,3 +13,5 @@
 	un=unstage
 	fa=fetch --all
 	last=log -1 HEAD
+[init]
+	defaultBranch = master
