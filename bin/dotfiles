@@ -2,7 +2,7 @@
 
 # Var -------------------------------------------------------------------------
 
-REPOURL="https://github.com/fmbarina/.dotfiles.git" 
+REPOURL="https://github.com/fmbarina/dotfiles.git" 
 
 DOTFILES="$HOME/.dotfiles"
 BIN_DIR="$DOTFILES/bin"
