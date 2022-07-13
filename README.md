@@ -66,12 +66,12 @@ Alternatively, if you really wanna try these out for some reason, fork the repos
 
 I run this:
 ```
-bash -c "$(wget -qO- https://raw.githubusercontent.com/fmbarina/.dotfiles/master/bin/dotfiles)" && source ~/.bashrc
+bash -c "$(wget -qO- https://raw.githubusercontent.com/fmbarina/dotfiles/master/bin/dotfiles)" && source ~/.bashrc
 ```
 
 ## Inspiration
 
-Heavily inspired by this guy's [very cool dotfiles](https://github.com/cowboy/dotfiles), thanks cowboy. In fact, it might've easier to just use his, but I don't learn as well without doing things myself.
+Heavily inspired by this guy's [very cool dotfiles](https://github.com/cowboy/dotfiles), thanks cowboy. In fact, it might've been easier to just use his, but I don't learn as well without doing things myself.
 
 I'd also like to thank the [dotfiles community](https://dotfiles.github.io) all around for all the amazing dotfiles and guides out there.
 
