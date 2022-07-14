@@ -33,7 +33,7 @@ gnome_name_from_link() {
 
 gnome_install_ext() {
     # TODO: if on wayland, maybe don't try restarting, as it will fail
-    gext "$1" --yes --restart-shell 1> /dev/null
+    gext "$1" --yes --restart-shell 1>> "$LOG_FILE"
 }
 
 # Run -------------------------------------------------------------------------

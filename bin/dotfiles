@@ -15,7 +15,7 @@ FONT_DIR="$DOTFILES/misc/fonts"
 DOWN_DIR="$HOME/Downloads/tmpdotfiles"
 LOG_DIR="$DOTFILES"
 
-LOG_FILE="$DOTFILES/dotfiles.log"
+LOG_FILE="$LOG_DIR/dotfiles.log"
 
 sudop=              # sudo password
 declare -i sudof=0  # sudo fail counter
@@ -62,10 +62,8 @@ log() {
 		mkdir -p "$LOG_DIR"
 	fi
 
-	if [ -d "$LOG_DIR" ]; then
-		if [ -n "$enable_log" ]; then
-			echo -e "[$(date +%H:%M:%S)] - $1" >> "$LOG_FILE"; 
-		fi
+	if [ -d "$LOG_DIR" ] && [ -n "$enable_log" ]; then
+		echo -e "[$(date +%H:%M:%S)] - $1" >> "$LOG_FILE"; 
 	fi
 }
 
@@ -291,5 +289,6 @@ if [ -z "$INSTALLED" ]; then
 	echo 'Since this is your first time running dotfiles...'
 	e_arrow 'A ".installed" file has been created. To run dotfiles again \
 			 as if for the first time, please remove it.'
-	e_arrow 'You may need to restart your shell for changes to take effect.'
+	e_arrow 'You may need to restart your shell and/or system for some \
+			 changes to take effect.'
 fi
