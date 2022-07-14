@@ -28,7 +28,7 @@ backup() {
 	fi
 
 	if ! [ -e "$BKP_DIR" ]; then
-		make_dir "$BKP_DIR"
+		mkdir -p "$BKP_DIR"
 	elif [ -e "$BKP_DIR/$(basename "$src")" ]; then
 		log "[backup] $src already exists, stopped. Please remove or rename it."
 		abort "$src was already backed up, stopped. Please remove or rename it."
@@ -101,7 +101,7 @@ copy() {
 
 	# If it's a directory, recursively copy its contents
 	if [ -d "$src" ]; then
-		make_dir "$dest"
+		mkdir -p "$dest"
 		log "[copy] Copying contents of $src To: $dest"
 		for item in "$src"/*; do
 			copy "$item" "$dest/$(basename "$item")"
