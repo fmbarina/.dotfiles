@@ -4,17 +4,13 @@ These are my Fedora / Ubuntu [dotfiles](https://dotfiles.github.io), with built-
 
 ### About
 
-Dotfiles are an extremely useful way to quickly bootstrap a new system, as with a single command it's possible to automate the proccess of getting your system just the way you like it.
-
-I like gaming, specially gaming to relax. I also like learning more about linux. Considering the effort required to game on linux, I decided to stay in Windows and use linux VMs. As a bonus, whenever something goes wrong, I can just nuke the entire thing and start over. That's not to say I won't fix my mistakes, I just don't wanna deal with the aftermath of trying out `rm -rf /` for fun (don't do it).
-
-Why is this relevant? Because it tells you that this was made partially as a learning project and oriented towards quickly setting up new systems suited for a specific use-case. 
+Dotfiles are an extremely useful way to quickly bootstrap a new system, as with a single command it's possible to automate the proccess of getting your system just the way you like it. These dotfiles were made in large part as a learning project and oriented towards quickly setting up new systems suited for a specific use-case. 
 
 With that out of the way, `bin/dotfiles` is the "dotfiles" command that makes things happen.
 
 ## How it works
 
-- Git is installed if necessary.*
+- Git is installed* if necessary.
 - The repository is cloned/updated in ~/ with aforementioned Git.
 - Dotfiles sources relevant files inside src/ and vendor/
 - `bin/` - Everything here will be added to PATH.
@@ -36,11 +32,11 @@ Stuff inside link/ is symlinked to ~/. Anything that would be overwritten is cop
 
 ### About `copy`
 
-Stuff inside copy/ is copied to ~/. Anything that would be overwritten is copied to `backup/`. Currently, no files are overwritten if a .installed file is detected inside dotfiles. If this file is removed, dotfiles will assume it has to copy the files regardless.
+Stuff inside copy/ is recursively copied to ~/. Anything that would be overwritten is copied to `backup/`. Currently, no files are overwritten if a .installed file is detected inside dotfiles.
 
 ### About `init`
 
-Much of this is post-install stuff, some stuff is distro specific. For example, `distro-install.sh` only runs generic functions, while their actual implementation depends on the sourced `distro.sh` file inside `src/`.
+Much of this is post-install stuff, some stuff is distro specific. For example, `distro-install.sh` only runs generic functions, while their actual implementation depends on the sourced `[distro].sh` file inside `src/`.
 
 ### Others
 
