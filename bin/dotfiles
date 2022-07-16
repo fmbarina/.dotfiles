@@ -287,8 +287,6 @@ prompt_yn 'Reboot?' && sudo_do 'reboot'; echo ''; echo ''
 if [ -z "$INSTALLED" ]; then
 	echo ''
 	echo 'Since this is your first time running dotfiles...'
-	e_arrow 'A ".installed" file has been created. To run dotfiles again \
-			 as if for the first time, please remove it.'
-	e_arrow 'You may need to restart your shell and/or system for some \
-			 changes to take effect.'
+	e_arrow 'A ".installed" file has been created. To run dotfiles again as if for the first time, remove it.'
+	e_arrow 'You may need to restart your shell and/or system for some changes to take effect.'
 fi
