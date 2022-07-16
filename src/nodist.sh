@@ -205,6 +205,10 @@ is_gnome() {
 	[[ "$(get_de)" = *"gnome"* ]]
 }
 
+is_wayland() {
+	[ "$XDG_SESSION_TYPE" == "wayland" ]
+}
+
 ### github ###
 
 # Not really github specific, but that's what it's used for by dotfiles
