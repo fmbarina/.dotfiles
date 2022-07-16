@@ -1,3 +1,5 @@
 #!/bin/bash
 
+[ -z "$DOTFILES" ] && DOTFILES="$HOME/.dotfiles"
+
 bash "$DOTFILES/vendor/gnome-shell-extension-installer/gnome-shell-extension-installer" "$@"
